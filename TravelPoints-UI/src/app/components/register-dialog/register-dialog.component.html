@@ -1,0 +1,35 @@
+<section class="vh-100">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6 text-black">
+        <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+          <form style="width: 23rem;">
+            <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Register here</h3>
+            <div class="form-outline mb-4">
+              <div class="myDIV">Email</div>
+              <div class="hide">Email must have this format [email]&#64;[app].[domain]!
+              </div>
+              <input [(ngModel)]="user.email" type="email" class="form-control form-control-lg"
+                     name="email"/>
+            </div>
+            <div class="form-outline mb-4">
+              <div class="myDIV">Password</div>
+              <div class="hide">Password should contain: at least 7 characters, at least 1 upper case, at least 1 lower
+                case and at least 1 special character!
+              </div>
+              <input [(ngModel)]="user.password" type="password" class="form-control form-control-lg"
+                     name="password"/>
+            </div>
+            <div class="pt-1 mb-4">
+              <button style="background-color: #8FA08E" mat-button (click)="onClickRegister()">Register</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-sm-6 px-0 d-none d-sm-block">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img3.webp"
+             alt="Register image" class="w-100 vh-100 bg-image-vertical">
+      </div>
+    </div>
+  </div>
+</section>

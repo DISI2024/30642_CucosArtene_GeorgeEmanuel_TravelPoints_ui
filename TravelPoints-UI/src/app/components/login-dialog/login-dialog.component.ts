@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
+import {RegisterDialogComponent} from "../register-dialog/register-dialog.component";
 
 @Component({
   selector: 'app-login-dialog',
@@ -41,8 +42,8 @@ export class LoginDialogComponent {
   }
 
   openRegisterDialog() {
-    this.dialog.open(LoginDialogComponent, {
-      width: '1000px'
+    this.dialog.open(RegisterDialogComponent, {
+      width: '100vh'
     });
   }
 }
