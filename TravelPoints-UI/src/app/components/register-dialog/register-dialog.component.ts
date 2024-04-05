@@ -1,14 +1,17 @@
 import {Component} from '@angular/core';
 import {User} from "../../models/User";
 import {UserType} from "../../models/UserType";
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
+import {HttpClientModule} from "@angular/common/http";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-register-dialog',
   standalone: true,
-  imports: [MatDialogModule, FormsModule, MatButton],
+  imports: [MatDialogModule, FormsModule, MatButton, HttpClientModule],
+  providers: [AuthService],
   templateUrl: './register-dialog.component.html',
   styleUrl: './register-dialog.component.css'
 })
@@ -16,7 +19,8 @@ export class RegisterDialogComponent {
   user: User = new User()
   valid: boolean = true
 
-  constructor() {
+  constructor(private dialogRef: MatDialogRef<RegisterDialogComponent>,
+              private authService: AuthService) {
   }
 
   onClickRegister() {
@@ -33,5 +37,12 @@ export class RegisterDialogComponent {
       alert("Check the correct format for password")
     }
     this.user.createdAt = new Date().toISOString().substring(0, 10)
+    this.authService.register(this.user).subscribe({
+      next: () => {
+        alert("Registration successful!")
+        this.dialogRef.close()
+      },
+      error: () => alert("There is already an account with this email")
+    })
   }
 }
