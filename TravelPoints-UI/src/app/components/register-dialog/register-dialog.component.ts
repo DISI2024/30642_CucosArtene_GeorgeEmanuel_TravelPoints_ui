@@ -36,7 +36,6 @@ export class RegisterDialogComponent {
       this.valid = false
       alert("Check the correct format for password")
     }
-    this.user.createdAt = new Date().toISOString().substring(0, 10)
     this.authService.register(this.user).subscribe({
       next: () => {
         alert("Registration successful!")
