@@ -3,6 +3,7 @@ import {NgModule} from "@angular/core";
 import {HomePageComponent} from "./components/home-page/home-page.component";
 
 export const routes: Routes = [
+  {path: '', component: HomePageComponent},
   {path: 'home', component: HomePageComponent},
 ];
 
