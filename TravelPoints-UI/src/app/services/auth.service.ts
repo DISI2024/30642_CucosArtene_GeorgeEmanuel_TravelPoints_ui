@@ -26,4 +26,9 @@ export class AuthService {
     const headers = {'Content-Type': 'application/json'};
     return this.httpClient.post<User>(this.baseURL + "/register", user, {headers});
   }
+
+  logOut(userId: number) {
+    const headers = {'Content-Type': 'application/json'};
+    return this.httpClient.put<number>(this.baseURL + "/logout/" + userId, {headers});
+  }
 }
