@@ -6,6 +6,7 @@ import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
 import {RegisterDialogComponent} from "../register-dialog/register-dialog.component";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-login-dialog',
@@ -35,7 +36,12 @@ export class LoginDialogComponent {
         localStorage.setItem('token', response)
         this.dialogRef.close();
         alert("Login successful!")
-        this.router.navigate(['/destinations'])
+        let tokenPayload: any = jwtDecode(response)
+        if(tokenPayload.userType === 'ADMIN') {
+          this.router.navigate(['/admin-dashboard'])
+        } else {
+          this.router.navigate(['/tourist-attractions'])
+        }
       },
       error: () => alert("Login failed")
     })

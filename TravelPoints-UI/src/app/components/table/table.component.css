@@ -1,0 +1,49 @@
+.demo-table {
+  width: 100%;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+
+.action-buttons {
+  margin-right: 8px;
+}
+
+.mat-cell .mat-icon-button {
+  display: inline-flex;
+  margin-right: 8px;
+}
+
+.action-cell {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.box {
+  background-color: #ffffff;
+  padding: 25px 20px;
+}
+.add-row-button {
+  color: #a0a0af;
+  background-color: rgba(160, 160, 175, 0);
+  left: 0;
+  z-index: 100;
+}
+
+.action-button {
+  color: #a0a0af;
+  left: 0;
+  z-index: 100;
+}
+
+.table-scroll {
+  max-height: 500px;
+  overflow-y: auto;
+  width: 100%;
+}
