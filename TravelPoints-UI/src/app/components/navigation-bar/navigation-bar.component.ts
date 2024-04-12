@@ -5,6 +5,7 @@ import {NgIf} from "@angular/common";
 import {AuthService} from "../../services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-navigation-bar',
@@ -31,7 +32,7 @@ export class NavigationBarComponent {
   }
 
   logOut() {
-    let tokenPayload = jwt_decode(this.token);
+    let tokenPayload: any = jwtDecode(this.token);
     let id = tokenPayload.id;
     this.authService.logOut(id).subscribe({
       next:(response: string) => {

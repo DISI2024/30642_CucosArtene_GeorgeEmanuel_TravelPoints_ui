@@ -16,6 +16,7 @@ import {MatButton, MatFabButton, MatIconButton} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
 import {NgIf} from "@angular/common";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
+import {TouristAttractionDialogComponent} from "../tourist-attraction-dialog/tourist-attraction-dialog.component";
 
 @Component({
   selector: 'app-table',
@@ -59,5 +60,22 @@ export class TableComponent implements OnInit, AfterViewInit{
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  addItem() {
+    const dialogRef = this.dialog.open(TouristAttractionDialogComponent, {
+      width: '45vh',
+      panelClass: 'mat-dialog-container',
+      data: {
+        id: -99,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.touristAttractionService.getAllTouristAttractions().subscribe({
+        next:(destinations: TouristAttraction[]) => {
+          this.dataSource = new MatTableDataSource<TouristAttraction>(destinations);
+        }})
+    });
   }
 }
