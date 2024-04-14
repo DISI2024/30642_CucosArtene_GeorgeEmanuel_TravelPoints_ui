@@ -40,11 +40,11 @@ import {TouristAttractionDialogComponent} from "../tourist-attraction-dialog/tou
     NgIf,
     MatPaginatorModule
   ],
-  providers:[TouristAttractionService],
+  providers: [TouristAttractionService],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
-export class TableComponent implements OnInit, AfterViewInit{
+export class TableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'imageUrl', 'name', 'location', 'category', 'createdAt', 'description', 'entryPrice', 'offers', 'actions'];
   dataSource: MatTableDataSource<TouristAttraction> | any
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined
@@ -54,10 +54,12 @@ export class TableComponent implements OnInit, AfterViewInit{
 
   ngOnInit(): void {
     this.touristAttractionService.getAllTouristAttractions().subscribe({
-      next:(destinations: TouristAttraction[]) => {
-      this.dataSource = new MatTableDataSource<TouristAttraction>(destinations);
-    }})
+      next: (destinations: TouristAttraction[]) => {
+        this.dataSource = new MatTableDataSource<TouristAttraction>(destinations);
+      }
+    })
   }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
@@ -73,9 +75,25 @@ export class TableComponent implements OnInit, AfterViewInit{
 
     dialogRef.afterClosed().subscribe(result => {
       this.touristAttractionService.getAllTouristAttractions().subscribe({
-        next:(destinations: TouristAttraction[]) => {
-          this.dataSource = new MatTableDataSource<TouristAttraction>(destinations);
-        }})
+        next: (touristAttractions: TouristAttraction[]) => {
+          this.dataSource = new MatTableDataSource<TouristAttraction>(touristAttractions);
+        }
+      })
+    });
+  }
+
+  deleteItem(touristAttraction: TouristAttraction) {
+    this.touristAttractionService.deleteTouristAttractionById(touristAttraction.attractionId).subscribe({
+      next: () => {
+        this.touristAttractionService.getAllTouristAttractions().subscribe({
+          next: (touristAttractions: TouristAttraction[]) => {
+            this.dataSource = new MatTableDataSource<TouristAttraction>(touristAttractions);
+          }
+        })
+      },
+      error: () => {
+        alert('Error deleting touristAttraction')
+      }
     });
   }
 }
