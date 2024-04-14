@@ -44,7 +44,7 @@ export class TouristAttractionPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.touristAttractionService.getAll().subscribe({
+    this.touristAttractionService.getAllTouristAttractions().subscribe({
       next: data => this.touristAttractions = data
     })
   }

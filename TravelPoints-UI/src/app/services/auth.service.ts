@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class AuthService {
-  baseURL: string = "http://localhost:8080";
+  baseURL: string = "http://localhost:8080/auth";
 
   constructor(private httpClient: HttpClient) {
   }
@@ -25,5 +25,10 @@ export class AuthService {
   register(user: User): Observable<User> {
     const headers = {'Content-Type': 'application/json'};
     return this.httpClient.post<User>(this.baseURL + "/register", user, {headers});
+  }
+
+  logOut(userId: number) {
+    const headers = {'Content-Type': 'application/json'};
+    return this.httpClient.put<number>(this.baseURL + "/logout/" + userId, {headers});
   }
 }

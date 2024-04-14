@@ -1,0 +1,53 @@
+<app-navigation-bar></app-navigation-bar>
+<div class="d-flex flex-row ">
+  <div class="col-sm-2 sidenav-full">
+        <nav class="sb-sidenav sb-sidenav-dark" id="sidenavAccordion" style="height: 100%">
+          <div class="sb-sidenav-menu">
+            <div class="nav">
+              <div class="sb-sidenav-menu-heading">Core</div>
+              <a class="nav-link" href="/admin-dashboard">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Dashboard
+              </a>
+              <div class="sb-sidenav-menu-heading">Statistics</div>
+              <a class="nav-link collapsed" href="/admin-dashboard#chart-container" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                Charts
+              </a>
+              <div class="sb-sidenav-menu-heading">Data</div>
+              <a class="nav-link" href="/admin-dashboard#table-container">
+                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                Table
+              </a>
+            </div>
+          </div>
+          <div class="sb-sidenav-footer">
+            <div class="small">Logged in as:</div>
+            Admin
+          </div>
+        </nav>
+    </div>
+    <div class="col mx-4 mt-5">
+        <div class="chart-container" id="chart-container">
+          <div class="row mt-4 d-flex justify-content-center">
+            <div class="col-md-6">
+              <div class="box shadow mt-4">
+                <app-area-chart></app-area-chart>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="box shadow mt-4">
+                <app-options-line-chart></app-options-line-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-container d-flex justify-content-center" id="table-container">
+          <div class="col-lg-13">
+            <div class="box shadow mt-4">
+              <app-table></app-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
