@@ -62,10 +62,10 @@ export class TouristAttractionDialogComponent implements OnInit{
       touristAttraction.location = this.myForm.get('location').value;
       touristAttraction.category = this.myForm.get('category').value;
       touristAttraction.createdAt = this.myForm.get('createdAt').value;
-      touristAttraction.description = this.myForm.get('description').value;
+      touristAttraction.descriptionText = this.myForm.get('description').value;
       touristAttraction.entryPrice = this.myForm.get('entryPrice').value;
       touristAttraction.offers = this.myForm.get('offers').value;
-      touristAttraction.imageUrl = this.myForm.get('imageUrl').value;
+      touristAttraction.imagePath = this.myForm.get('imageUrl').value;
 
       this.touristAttractionService.addTouristAttraction(touristAttraction).subscribe((createdDestination: TouristAttraction) => {
         console.log(createdDestination)

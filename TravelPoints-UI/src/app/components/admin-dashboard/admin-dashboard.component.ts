@@ -6,7 +6,6 @@ import {OptionsLineChartComponent} from "../charts/options-line-chart/options-li
 import {AreaChartComponent} from "../charts/area-chart/area-chart.component";
 import {TableComponent} from "../table/table.component";
 import {NavigationBarComponent} from "../navigation-bar/navigation-bar.component";
-import {HttpClient} from "@angular/common/http";
 import {jwtDecode} from 'jwt-decode'
 
 @Component({
@@ -39,6 +38,4 @@ export class AdminDashboardComponent implements OnInit {
       this.username = tokenPayload.userType
     }
   }
-
-
 }
