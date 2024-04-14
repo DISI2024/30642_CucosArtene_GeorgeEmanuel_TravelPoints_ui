@@ -1,0 +1,48 @@
+<div class="box rounded-dialog">
+  <h2 class="text-center">{{title}}</h2>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="container">
+    <div *ngIf="!imageUrl && this.data.id==-99" class="form-group">
+      <label for="imageUrl">Image Path</label>
+      <input type="text" formControlName="imageUrl" id="imageUrl" class="form-control" placeholder="Enter Image Url" [(ngModel)]="imageUrl">
+    </div>
+    <div *ngIf="imageUrl" style="position: relative; display: inline-block;">
+      <img [src]="imageUrl" alt="Uploaded Image" style="display: block; width: 100%; height: auto;"/>
+    </div>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" formControlName="name" id="name" class="form-control" placeholder="Enter name">
+    </div>
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input type="text" formControlName="location" id="location" class="form-control" placeholder="Enter location">
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category</label>
+      <select formControlName="category" id="category" class="form-control">
+        <option value="CULTURE">CULTURE</option>
+        <option value="NATURE">NATURE</option>
+        <option value="ENTERTAINMENT">ENTERTAINMENT</option>
+        <option value="URBAN">URBAN</option>
+        <option value="ADVENTURE">ADVENTURE</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea formControlName="description" id="description" class="form-control" placeholder="Enter description" rows="1"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="entryPrice">Entry Price</label>
+      <input type="text" formControlName="entryPrice" id="entryPrice" class="form-control" placeholder="Enter entry price">
+    </div>
+
+    <div class="form-group">
+      <label for="offers">Offers</label>
+      <input type="text" formControlName="offers" id="offers" class="form-control" placeholder="Enter offers">
+    </div>
+
+    <button type="submit" class="btn-primary">Submit</button>
+  </form>
+</div>

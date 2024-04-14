@@ -29,6 +29,6 @@ export class AuthService {
 
   logOut(userId: number) {
     const headers = {'Content-Type': 'application/json'};
-    return this.httpClient.put<number>(this.baseURL + "/logout/" + userId, {headers});
+    return this.httpClient.put<string>(this.baseURL + "/logout/" + userId, {headers});
   }
 }

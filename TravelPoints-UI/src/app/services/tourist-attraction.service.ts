@@ -19,4 +19,12 @@ export class TouristAttractionService {
             .set('Authorization', `Bearer ${token}`)
         return this.httpClient.post<TouristAttraction[]>(this.baseURL + "/getAllAttractions", {headers});
     }
+
+    addTouristAttraction(touristAttraction: TouristAttraction): Observable<TouristAttraction> {
+      let token = localStorage.getItem("token")
+      let header = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+      return this.httpClient.post<TouristAttraction>(this.baseURL + "/create", touristAttraction, {headers: header});
+    }
 }

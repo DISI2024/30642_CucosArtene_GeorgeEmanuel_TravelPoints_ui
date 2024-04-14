@@ -1,0 +1,71 @@
+.rounded-dialog {
+  z-index: 100 !important;
+  border-radius: 15px;
+  background-color: #f7f8fa;
+  color: #333;
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.1);
+}
+
+.rounded-dialog .form-control,
+.rounded-dialog .form-control:focus {
+  border-radius: 15px;
+  border: 1px solid #ced4da;
+  background-color: #ffffff;
+}
+
+.rounded-dialog .form-control:focus {
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+  border-color: #80bdff;
+}
+
+.btn-primary {
+  border-radius: 15px;
+  padding: 10px 15px;
+  border: none;
+  background-image: linear-gradient(to right, #4e54c8, #8f94fb);
+  color: white;
+  font-weight: bold;
+  transition: background-image 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-image: linear-gradient(to right, #8f94fb, #4e54c8);
+}
+
+.container,
+.box {
+  background-color: #f7f8fa;
+}
+
+.custom-dialog-container .mat-dialog-container {
+  border-radius: 15px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: .1rem;
+  display: inline-block;
+}
+
+button[type="submit"] {
+  width: 100%;
+  margin-top: 0.1rem;
+}
+
+.form-group {
+  margin-bottom: 0.1rem;
+}
+
+::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+}
+
+.box h2 {
+  color: #4e54c8;
+  margin-bottom: 1.5rem;
+}
+
+form {
+  margin-bottom: 1rem;
+}
