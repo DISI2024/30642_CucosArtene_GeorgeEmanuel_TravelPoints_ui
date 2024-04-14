@@ -1,0 +1,27 @@
+<body style="background-color: #666666">
+<h2 mat-dialog-title style="color: whitesmoke">Description</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="description-section">
+    <p style="color: whitesmoke">{{this.description}}</p>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="action-buttons" align="end">
+  <div class="playback-controls">
+    <button mat-icon-button (click)="speak()" aria-label="Play">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+    <button mat-icon-button (click)="pause()" aria-label="Pause">
+      <mat-icon>pause</mat-icon>
+    </button>
+    <button mat-icon-button (click)="resume()" aria-label="Resume">
+      <mat-icon>play_circle_filled</mat-icon>
+    </button>
+    <button mat-icon-button (click)="stop()" aria-label="Stop">
+      <mat-icon>stop</mat-icon>
+    </button>
+  </div>
+  <div class="flex-grow">
+    <button mat-button color="warn" mat-dialog-close>Close</button>
+  </div>
+</mat-dialog-actions>
+</body>
