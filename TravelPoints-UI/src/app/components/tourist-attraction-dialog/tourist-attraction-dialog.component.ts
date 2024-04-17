@@ -59,6 +59,7 @@ export class TouristAttractionDialogComponent implements OnInit{
       //this will be populated in the next task
     } else {
       let touristAttraction = new TouristAttraction()
+      touristAttraction.name = this.myForm.get('name').value;
       touristAttraction.location = this.myForm.get('location').value;
       touristAttraction.category = this.myForm.get('category').value;
       touristAttraction.createdAt = this.myForm.get('createdAt').value;

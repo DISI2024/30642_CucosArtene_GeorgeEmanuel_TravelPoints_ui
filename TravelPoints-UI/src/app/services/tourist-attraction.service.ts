@@ -35,4 +35,12 @@ export class TouristAttractionService {
       .set('Authorization', `Bearer ${token}`)
     return this.httpClient.delete<Response>(this.baseURL + "/delete/" + id, {headers: header});
   }
+
+  updateTouristAttraction(touristAttraction: TouristAttraction): Observable<TouristAttraction> {
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+    return this.httpClient.put<TouristAttraction>(this.baseURL + "/update", touristAttraction, {headers: header});
+  }
 }
