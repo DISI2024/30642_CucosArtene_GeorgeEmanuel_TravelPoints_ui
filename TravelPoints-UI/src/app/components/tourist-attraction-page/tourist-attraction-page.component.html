@@ -10,7 +10,26 @@
 <app-navigation-bar></app-navigation-bar>
 
 <header class="hero">
-  <h1>Discover awesome locations</h1>
+  <h1>Discover awesome destinations</h1>
+  <div class="search-area">
+    <div class="search-container">
+      <input type="text" placeholder="Search destination" class="search-input"/>
+      <i class="search-icon fas fa-magnifying-glass fa-pull-left "></i>
+    </div>
+    <div class="radio-buttons">
+      <input
+        type="radio"
+        id="choice1"
+        name="selection"
+        value="category"
+        class="input-radio-button"
+        checked
+      />
+      <label for="choice1" class="radio-label">Category</label>
+      <input type="radio" id="choice2" name="selection" value="location" class="input-radio-button"/>
+      <label for="choice2" class='radio-label'>Location</label>
+    </div>
+  </div>
 </header>
 
 <section id="destinations" class="destination-cards">
