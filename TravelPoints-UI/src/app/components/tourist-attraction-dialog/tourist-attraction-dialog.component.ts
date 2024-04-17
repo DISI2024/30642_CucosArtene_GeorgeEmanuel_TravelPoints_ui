@@ -56,7 +56,23 @@ export class TouristAttractionDialogComponent implements OnInit{
 
   onSubmit(){
     if(this.data.id != -99) {
-      //this will be populated in the next task
+      this.id = this.data.id
+
+      let touristAttraction = new TouristAttraction()
+      touristAttraction.name = this.myForm.get('name').value;
+      touristAttraction.attractionId = this.data.id
+      touristAttraction.location = this.myForm.get('location').value;
+      touristAttraction.category = this.myForm.get('category').value;
+      touristAttraction.createdAt = this.myForm.get('createdAt').value;
+      touristAttraction.descriptionText = this.myForm.get('description').value;
+      touristAttraction.entryPrice = this.myForm.get('entryPrice').value;
+      touristAttraction.offers = this.myForm.get('offers').value;
+      touristAttraction.imagePath = this.myForm.get('imageUrl').value;
+      console.log(touristAttraction)
+
+      this.touristAttractionService.updateTouristAttraction(touristAttraction).subscribe((updatedDestination: TouristAttraction) => {
+        console.log(updatedDestination)
+      })
     } else {
       let touristAttraction = new TouristAttraction()
       touristAttraction.name = this.myForm.get('name').value;
