@@ -13,7 +13,8 @@
   <h1>Discover awesome destinations</h1>
   <div class="search-area">
     <div class="search-container">
-      <input type="text" placeholder="Search destination" class="search-input"/>
+      <input [(ngModel)]="searchInput" (input)="onInputChange()" type="text" placeholder="Search destination"
+             class="search-input"/>
       <i class="search-icon fas fa-magnifying-glass fa-pull-left "></i>
     </div>
     <div class="radio-buttons">
@@ -23,17 +24,19 @@
         name="selection"
         value="category"
         class="input-radio-button"
+        (change)="onChoice1Change($event)"
         checked
       />
       <label for="choice1" class="radio-label">Category</label>
-      <input type="radio" id="choice2" name="selection" value="location" class="input-radio-button"/>
+      <input type="radio" id="choice2" name="selection" value="location" class="input-radio-button"
+             (change)="onChoice2Change($event)"/>
       <label for="choice2" class='radio-label'>Location</label>
     </div>
   </div>
 </header>
 
 <section id="destinations" class="destination-cards">
-  <div *ngFor="let attraction of touristAttractions; index as i" class="card">
+  <div *ngFor="let attraction of touristAttractionsResult; index as i" class="card">
     <img [src]="attraction.imagePath" alt="TouristAttraction 1">
     <div class="card-body">
       <h4>{{attraction.name}}, {{attraction.location}}</h4>

@@ -37,15 +37,22 @@ import {TouristAttractionService} from "../../services/tourist-attraction.servic
   styleUrl: './tourist-attraction-page.component.css'
 })
 export class TouristAttractionPageComponent implements OnInit {
-  touristAttractions: TouristAttraction[] = [];
+  touristAttractions: TouristAttraction[] = []
+  touristAttractionsResult: TouristAttraction[] = []
+  selectedOption: string | undefined
+  searchInput: string | undefined
 
   constructor(private dialog: MatDialog,
               private touristAttractionService: TouristAttractionService) {
   }
 
   ngOnInit() {
+    this.selectedOption = 'category'
     this.touristAttractionService.getAllTouristAttractions().subscribe({
-      next: data => this.touristAttractions = data
+      next: data => {
+        this.touristAttractions = data
+        this.touristAttractionsResult = this.touristAttractions
+      }
     })
   }
 
@@ -54,5 +61,35 @@ export class TouristAttractionPageComponent implements OnInit {
       width: '100vh',
       data: details,
     });
+  }
+
+  onChoice1Change(event: any) {
+    console.log((event.target as HTMLInputElement).value)
+    this.selectedOption = (event.target as HTMLInputElement).value;
+  }
+
+  onChoice2Change(event: any) {
+    console.log((event.target as HTMLInputElement).value)
+    this.selectedOption = (event.target as HTMLInputElement).value;
+  }
+
+  filterByCategory(category: string) {
+    this.touristAttractionsResult = this.touristAttractions.filter(touristAttraction => touristAttraction.category!.valueOf().toLowerCase().includes(category.toLowerCase()))
+  }
+
+  filterByLocation(location: string) {
+    this.touristAttractionsResult = this.touristAttractions.filter((touristAttraction) => touristAttraction.location?.toLowerCase().includes(location.toLowerCase()))
+  }
+
+  onInputChange() {
+    if (this.searchInput === undefined || this.searchInput === '') {
+      this.touristAttractionsResult = this.touristAttractions
+    } else {
+      if (this.selectedOption == "category") {
+        this.filterByCategory(this.searchInput!)
+      } else {
+        this.filterByLocation(this.searchInput!)
+      }
+    }
   }
 }
