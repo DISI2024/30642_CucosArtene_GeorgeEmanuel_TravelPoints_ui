@@ -32,11 +32,11 @@ export class LoginDialogComponent {
 
   onClickLogin() {
     this.authService.login(this.username, this.password).subscribe({
-      next:(response: string) => {
-        localStorage.setItem('token', response)
+      next:(response: any) => {
+        localStorage.setItem('token', response.token)
         this.dialogRef.close();
         alert("Login successful!")
-        let tokenPayload: any = jwtDecode(response)
+        let tokenPayload: any = jwtDecode(response.token)
         if(tokenPayload.userType === 'ADMIN') {
           this.router.navigate(['/admin-dashboard'])
         } else {

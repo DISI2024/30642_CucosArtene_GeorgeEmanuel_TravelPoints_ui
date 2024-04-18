@@ -7,7 +7,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
     providedIn: 'root'
 })
 export class TouristAttractionService {
-    baseURL: string = "http://localhost:8080/attractions";
+    baseURL: string = "http://localhost:8888/attractions";
 
     constructor(private httpClient: HttpClient) {
     }
@@ -34,5 +34,13 @@ export class TouristAttractionService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
     return this.httpClient.delete<Response>(this.baseURL + "/delete/" + id, {headers: header});
+  }
+
+  updateTouristAttraction(touristAttraction: TouristAttraction): Observable<TouristAttraction> {
+    let token = localStorage.getItem("token")
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+    return this.httpClient.put<TouristAttraction>(this.baseURL + "/update", touristAttraction, {headers: header});
   }
 }

@@ -43,6 +43,11 @@
       <input type="text" formControlName="offers" id="offers" class="form-control" placeholder="Enter offers">
     </div>
 
+    <div *ngIf="this.data.id!=-99" class="form-group">
+      <label for="createdAt">Created At</label>
+      <input [disabled]="true" type="text" formControlName="createdAt" id="createdAt" class="form-control" placeholder="" >
+    </div>
+
     <button type="submit" class="btn-primary">Submit</button>
   </form>
 </div>

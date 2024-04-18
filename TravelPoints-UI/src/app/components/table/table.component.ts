@@ -49,7 +49,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<TouristAttraction> | any
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined
 
-  constructor(private touristAttractionService: TouristAttractionService, public dialog: MatDialog,) {
+  constructor(private touristAttractionService: TouristAttractionService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -96,4 +96,33 @@ export class TableComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  editItem(touristAttraction: TouristAttraction) {
+    const dialogRef = this.dialog.open(TouristAttractionDialogComponent, {
+      width: '45vh',
+      panelClass: 'mat-dialog-container',
+      data: {
+        id: touristAttraction.attractionId,
+        name: touristAttraction.name,
+        location: touristAttraction.location,
+        description: touristAttraction.descriptionText,
+        category: touristAttraction.category,
+        createdAt: touristAttraction.createdAt,
+        offers: touristAttraction.offers,
+        entryPrice: touristAttraction.entryPrice,
+        imageUrl: touristAttraction.imagePath
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.touristAttractionService.getAllTouristAttractions().subscribe((destinations: TouristAttraction[]) => {
+        this.touristAttractionService.getAllTouristAttractions().subscribe({
+          next: (touristAttractions: TouristAttraction[]) => {
+            this.dataSource = new MatTableDataSource<TouristAttraction>(touristAttractions);
+          }
+        })
+      })
+    });
+  }
+
 }
