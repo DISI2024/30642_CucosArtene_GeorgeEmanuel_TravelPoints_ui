@@ -17,12 +17,12 @@
 }
 
 .hero h1 {
-  font-size: 2.5rem;
+  font-size: 30pt;
   margin-bottom: 0.5rem;
 }
 
 .hero p {
-  font-size: 1.2rem;
+  font-size: 14.4pt;
   margin-bottom: 1rem;
 }
 
@@ -74,7 +74,7 @@
 }
 
 .card p {
-  font-size: 14px;
+  font-size: 10.5pt;
   color: #666;
 }
 

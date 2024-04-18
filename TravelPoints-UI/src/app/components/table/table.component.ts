@@ -5,8 +5,12 @@ import {
   MatColumnDef,
   MatHeaderCell,
   MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
-  MatTable, MatTableDataSource
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
+  MatRowDef,
+  MatTable,
+  MatTableDataSource
 } from "@angular/material/table";
 import {HttpClientModule} from "@angular/common/http";
 import {TouristAttraction} from "../../models/TouristAttraction";
@@ -45,7 +49,7 @@ import {TouristAttractionDialogComponent} from "../tourist-attraction-dialog/tou
   styleUrl: './table.component.css'
 })
 export class TableComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'imageUrl', 'name', 'location', 'category', 'createdAt', 'description', 'entryPrice', 'offers', 'actions'];
+  displayedColumns: string[] = ['attractionId', 'imagePath', 'name', 'location', 'category', 'createdAt', 'descriptionText', 'entryPrice', 'offers', 'actions'];
   dataSource: MatTableDataSource<TouristAttraction> | any
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined
 
@@ -56,12 +60,17 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.touristAttractionService.getAllTouristAttractions().subscribe({
       next: (destinations: TouristAttraction[]) => {
         this.dataSource = new MatTableDataSource<TouristAttraction>(destinations);
+        console.log(this.dataSource)
       }
     })
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    } else {
+      console.error('Paginator is undefined');
+    }
   }
 
   addItem() {
@@ -102,15 +111,15 @@ export class TableComponent implements OnInit, AfterViewInit {
       width: '45vh',
       panelClass: 'mat-dialog-container',
       data: {
-        id: touristAttraction.attractionId,
+        attractionId: touristAttraction.attractionId,
         name: touristAttraction.name,
         location: touristAttraction.location,
-        description: touristAttraction.descriptionText,
+        descriptionText: touristAttraction.descriptionText,
         category: touristAttraction.category,
         createdAt: touristAttraction.createdAt,
         offers: touristAttraction.offers,
         entryPrice: touristAttraction.entryPrice,
-        imageUrl: touristAttraction.imagePath
+        imagePath: touristAttraction.imagePath
       }
     });
 
@@ -124,5 +133,6 @@ export class TableComponent implements OnInit, AfterViewInit {
       })
     });
   }
+
 
 }
