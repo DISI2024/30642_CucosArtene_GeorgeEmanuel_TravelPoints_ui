@@ -85,7 +85,7 @@ export class TouristAttractionPageComponent implements OnInit {
     if (this.searchInput === undefined || this.searchInput === '') {
       this.touristAttractionsResult = this.touristAttractions
     } else {
-      if (this.selectedOption == "category") {
+      if (this.selectedOption === "category") {
         this.filterByCategory(this.searchInput!)
       } else {
         this.filterByLocation(this.searchInput!)
