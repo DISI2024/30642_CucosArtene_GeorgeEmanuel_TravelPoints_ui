@@ -76,12 +76,10 @@ export class TouristAttractionDialogComponent implements OnInit{
     if(this.data.id != -99) {
       this.id = this.data.id
       touristAttraction.attractionId = this.data.id
-      this.touristAttractionService.updateTouristAttraction(touristAttraction).subscribe((updatedDestination: TouristAttraction) => {
-        console.log(updatedDestination)
+      this.touristAttractionService.updateTouristAttraction(touristAttraction).subscribe(() => {
       })
     } else {
-      this.touristAttractionService.addTouristAttraction(touristAttraction).subscribe((createdDestination: TouristAttraction) => {
-        console.log(createdDestination)
+      this.touristAttractionService.addTouristAttraction(touristAttraction).subscribe(() => {
       })
 
     }
