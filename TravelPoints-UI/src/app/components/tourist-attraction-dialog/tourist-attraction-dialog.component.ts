@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TouristAttractionService} from "../../services/tourist-attraction.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {TouristAttraction} from "../../models/TouristAttraction";
@@ -10,10 +10,10 @@ const FORM_NAME: string = "name"
 const FORM_LOCATION: string = "location"
 const FORM_CATEGORY: string = "category"
 const FORM_CREATED_AT: string = "createdAt"
-const FORM_DESCRIPTION: string = "description"
+const FORM_DESCRIPTION: string = "descriptionText"
 const FORM_ENTRY_PRICE: string = "entryPrice"
 const FORM_OFFERS: string = "offers"
-const FORM_IMAGE_PATH: string = "imageUrl"
+const FORM_IMAGE_PATH: string = "imagePath"
 @Component({
   selector: 'app-destination-dialog',
   standalone: true,
@@ -33,27 +33,28 @@ export class TouristAttractionDialogComponent implements OnInit{
   id: string = ""
   location: string = ""
   name: string = ""
-  description: string = ""
+  descriptionText: string = ""
   category: string = ""
   createdAt: string = ""
   offers: string = ""
   entryPrice: number = 0
   title: string = ""
-  imageUrl: string = "";
+  imagePath: string = "";
 
   constructor(private fb: FormBuilder, private touristAttractionService: TouristAttractionService, public dialogRef: MatDialogRef<TouristAttractionDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
+    console.log(this.data)
     this.myForm = this.fb.group({
       name:[''],
       location: [''],
       category: [''],
-      createdAt: [''],
-      description: [''],
+      createdAt: new FormControl({value: '', disabled: true}),
+      descriptionText: [''],
       entryPrice: [''],
       offers: [''],
-      imageUrl:['']
+      imagePath:['']
     });
     if(this.data.id == -99) {
       this.title = "New Tourist Attraction"
@@ -75,7 +76,7 @@ export class TouristAttractionDialogComponent implements OnInit{
     touristAttraction.imagePath = this.myForm.get(FORM_IMAGE_PATH).value;
     if(this.data.id != -99) {
       this.id = this.data.id
-      touristAttraction.attractionId = this.data.id
+      touristAttraction.attractionId = this.data.attractionId
       this.touristAttractionService.updateTouristAttraction(touristAttraction).subscribe(() => {
       })
     } else {

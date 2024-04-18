@@ -8,38 +8,43 @@ import {Router} from "@angular/router";
 import {jwtDecode} from "jwt-decode";
 
 @Component({
-    selector: 'app-navigation-bar',
-    standalone: true,
-    imports: [
-        NgIf,
-        HttpClientModule
-    ],
-    providers: [AuthService],
-    templateUrl: './navigation-bar.component.html',
-    styleUrl: './navigation-bar.component.css'
+  selector: 'app-navigation-bar',
+  standalone: true,
+  imports: [
+    NgIf,
+    HttpClientModule
+  ],
+  providers: [AuthService],
+  templateUrl: './navigation-bar.component.html',
+  styleUrl: './navigation-bar.component.css'
 })
 export class NavigationBarComponent {
-    token: any
+  token: any
 
-    constructor(private dialog: MatDialog, private authService: AuthService, private router: Router) {
-        this.token = localStorage.getItem('token')
-    }
+  constructor(private dialog: MatDialog, private authService: AuthService, private router: Router) {
+    this.token = localStorage.getItem('token')
+  }
 
-    openLoginDialog() {
-        this.dialog.open(LoginDialogComponent, {
-            width: '100vh'
-        });
-    }
+  openLoginDialog() {
+    this.dialog.open(LoginDialogComponent, {
+      width: '100vh'
+    });
+  }
 
-    logOut() {
-        let tokenPayload: any = jwtDecode(this.token);
-        let id = tokenPayload.id;
-        this.authService.logOut(id).subscribe({
-            next: () => {
-                alert("LogOut successful!")
-                this.router.navigate(['/home-page'])
-            },
-            error: () => alert("LogOut failed")
-        })
-    }
+  logOut() {
+    let tokenPayload: any = jwtDecode(this.token);
+    let id = tokenPayload.id;
+    this.authService.logOut(id).subscribe({
+      next: (response: any) => {
+        alert("LogOut successful!")
+        localStorage.clear()
+        this.token = null
+        this.router.navigate(['/home'])
+      },
+      error: (error: any) =>  {
+        console.error(error)
+        alert("LogOut failed")
+      }
+    })
+  }
 }

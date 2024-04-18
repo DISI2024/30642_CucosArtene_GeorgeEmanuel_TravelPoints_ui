@@ -36,12 +36,14 @@ export class RegisterDialogComponent {
       this.valid = false
       alert("Check the correct format for password")
     }
-    this.authService.register(this.user).subscribe({
-      next: () => {
-        alert("Registration successful!")
-        this.dialogRef.close()
-      },
-      error: () => alert("There is already an account with this email")
-    })
+    if (this.valid) {
+      this.authService.register(this.user).subscribe({
+        next: () => {
+          alert("Registration successful!")
+          this.dialogRef.close()
+        },
+        error: () => alert("There is already an account with this email")
+      })
+    }
   }
 }

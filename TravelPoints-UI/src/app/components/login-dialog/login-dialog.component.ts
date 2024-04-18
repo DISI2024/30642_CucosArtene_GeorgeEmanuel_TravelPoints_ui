@@ -37,7 +37,7 @@ export class LoginDialogComponent {
         this.dialogRef.close();
         alert("Login successful!")
         let tokenPayload: any = jwtDecode(response.token)
-        if(tokenPayload.userType === 'ADMIN') {
+        if(tokenPayload.userType === 'ADMINISTRATOR') {
           this.router.navigate(['/admin-dashboard'])
         } else {
           this.router.navigate(['/tourist-attractions'])

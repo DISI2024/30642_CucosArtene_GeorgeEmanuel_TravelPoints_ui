@@ -1,12 +1,12 @@
 <div class="box rounded-dialog">
   <h2 class="text-center">{{title}}</h2>
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="container">
-    <div *ngIf="!imageUrl && this.data.id==-99" class="form-group">
-      <label for="imageUrl">Image Path</label>
-      <input type="text" formControlName="imageUrl" id="imageUrl" class="form-control" placeholder="Enter Image Url" [(ngModel)]="imageUrl">
+    <div *ngIf="!imagePath && this.data.id==-99" class="form-group">
+      <label for="imagePath">Image Path</label>
+      <input type="text" formControlName="imagePath" id="imagePath" class="form-control" placeholder="Enter Image Url" [(ngModel)]="imagePath">
     </div>
-    <div *ngIf="imageUrl" style="position: relative; display: inline-block;">
-      <img [src]="imageUrl" alt="Uploaded Image" style="display: block; width: 100%; height: auto;"/>
+    <div *ngIf="imagePath" style="position: relative; display: inline-block;">
+      <img [src]="imagePath" alt="Uploaded Image" style="display: block; width: 100%; height: auto;"/>
     </div>
     <div class="form-group">
       <label for="name">Name</label>
@@ -29,8 +29,8 @@
     </div>
 
     <div class="form-group">
-      <label for="description">Description</label>
-      <textarea formControlName="description" id="description" class="form-control" placeholder="Enter description" rows="1"></textarea>
+      <label for="descriptionText">Description</label>
+      <textarea formControlName="descriptionText" id="descriptionText" class="form-control" placeholder="Enter description" rows="1"></textarea>
     </div>
 
     <div class="form-group">
@@ -45,7 +45,7 @@
 
     <div *ngIf="this.data.id!=-99" class="form-group">
       <label for="createdAt">Created At</label>
-      <input [disabled]="true" type="text" formControlName="createdAt" id="createdAt" class="form-control" placeholder="" >
+      <input type="text" formControlName="createdAt" id="createdAt" class="form-control" placeholder="" >
     </div>
 
     <button type="submit" class="btn-primary">Submit</button>

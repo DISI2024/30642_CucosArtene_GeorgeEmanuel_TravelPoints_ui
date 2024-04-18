@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../models/User";
 
 import {Observable} from "rxjs";
@@ -28,7 +28,10 @@ export class AuthService {
   }
 
   logOut(userId: number) {
-    const headers = {'Content-Type': 'application/json'};
+    let token = localStorage.getItem("token")
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
     return this.httpClient.put<string>(this.baseURL + "/logout/" + userId, {headers});
   }
 }
