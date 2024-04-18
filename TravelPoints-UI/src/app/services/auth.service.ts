@@ -8,14 +8,14 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class AuthService {
-  baseURL: string = "http://localhost:8080/auth";
+  baseURL: string = "http://localhost:8888/auth";
 
   constructor(private httpClient: HttpClient) {
   }
 
-  login(username: any, password: any): Observable<string> {
+  login(email: any, password: any): Observable<string> {
     const body = JSON.stringify({
-        username: username,
+        email: email,
         password: password
       }
     )

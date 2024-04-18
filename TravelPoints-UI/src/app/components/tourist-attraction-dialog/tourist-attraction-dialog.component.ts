@@ -6,6 +6,14 @@ import {TouristAttraction} from "../../models/TouristAttraction";
 import {NgIf} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
 
+const FORM_NAME: string = "name"
+const FORM_LOCATION: string = "location"
+const FORM_CATEGORY: string = "category"
+const FORM_CREATED_AT: string = "createdAt"
+const FORM_DESCRIPTION: string = "description"
+const FORM_ENTRY_PRICE: string = "entryPrice"
+const FORM_OFFERS: string = "offers"
+const FORM_IMAGE_PATH: string = "imageUrl"
 @Component({
   selector: 'app-destination-dialog',
   standalone: true,
@@ -19,6 +27,7 @@ import {HttpClientModule} from "@angular/common/http";
   templateUrl: './tourist-attraction-dialog.component.html',
   styleUrl: './tourist-attraction-dialog.component.css'
 })
+
 export class TouristAttractionDialogComponent implements OnInit{
   myForm: any
   id: string = ""
@@ -55,20 +64,22 @@ export class TouristAttractionDialogComponent implements OnInit{
   }
 
   onSubmit(){
+    let touristAttraction = new TouristAttraction()
+    touristAttraction.name = this.myForm.get(FORM_NAME).value;
+    touristAttraction.location = this.myForm.get(FORM_LOCATION).value;
+    touristAttraction.category = this.myForm.get(FORM_CATEGORY).value;
+    touristAttraction.createdAt = this.myForm.get(FORM_CREATED_AT).value;
+    touristAttraction.descriptionText = this.myForm.get(FORM_DESCRIPTION).value;
+    touristAttraction.entryPrice = this.myForm.get(FORM_ENTRY_PRICE).value;
+    touristAttraction.offers = this.myForm.get(FORM_OFFERS).value;
+    touristAttraction.imagePath = this.myForm.get(FORM_IMAGE_PATH).value;
     if(this.data.id != -99) {
-      //this will be populated in the next task
+      this.id = this.data.id
+      touristAttraction.attractionId = this.data.id
+      this.touristAttractionService.updateTouristAttraction(touristAttraction).subscribe(() => {
+      })
     } else {
-      let touristAttraction = new TouristAttraction()
-      touristAttraction.location = this.myForm.get('location').value;
-      touristAttraction.category = this.myForm.get('category').value;
-      touristAttraction.createdAt = this.myForm.get('createdAt').value;
-      touristAttraction.descriptionText = this.myForm.get('description').value;
-      touristAttraction.entryPrice = this.myForm.get('entryPrice').value;
-      touristAttraction.offers = this.myForm.get('offers').value;
-      touristAttraction.imagePath = this.myForm.get('imageUrl').value;
-
-      this.touristAttractionService.addTouristAttraction(touristAttraction).subscribe((createdDestination: TouristAttraction) => {
-        console.log(createdDestination)
+      this.touristAttractionService.addTouristAttraction(touristAttraction).subscribe(() => {
       })
 
     }

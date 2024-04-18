@@ -40,24 +40,26 @@ import {TouristAttractionDialogComponent} from "../tourist-attraction-dialog/tou
     NgIf,
     MatPaginatorModule
   ],
-  providers:[TouristAttractionService],
+  providers: [TouristAttractionService],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
-export class TableComponent implements OnInit, AfterViewInit{
+export class TableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'imageUrl', 'name', 'location', 'category', 'createdAt', 'description', 'entryPrice', 'offers', 'actions'];
   dataSource: MatTableDataSource<TouristAttraction> | any
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined
 
-  constructor(private touristAttractionService: TouristAttractionService, public dialog: MatDialog,) {
+  constructor(private touristAttractionService: TouristAttractionService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.touristAttractionService.getAllTouristAttractions().subscribe({
-      next:(destinations: TouristAttraction[]) => {
-      this.dataSource = new MatTableDataSource<TouristAttraction>(destinations);
-    }})
+      next: (destinations: TouristAttraction[]) => {
+        this.dataSource = new MatTableDataSource<TouristAttraction>(destinations);
+      }
+    })
   }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
@@ -73,9 +75,54 @@ export class TableComponent implements OnInit, AfterViewInit{
 
     dialogRef.afterClosed().subscribe(result => {
       this.touristAttractionService.getAllTouristAttractions().subscribe({
-        next:(destinations: TouristAttraction[]) => {
-          this.dataSource = new MatTableDataSource<TouristAttraction>(destinations);
-        }})
+        next: (touristAttractions: TouristAttraction[]) => {
+          this.dataSource = new MatTableDataSource<TouristAttraction>(touristAttractions);
+        }
+      })
     });
   }
+
+  deleteItem(touristAttraction: TouristAttraction) {
+    this.touristAttractionService.deleteTouristAttractionById(touristAttraction.attractionId).subscribe({
+      next: () => {
+        this.touristAttractionService.getAllTouristAttractions().subscribe({
+          next: (touristAttractions: TouristAttraction[]) => {
+            this.dataSource = new MatTableDataSource<TouristAttraction>(touristAttractions);
+          }
+        })
+      },
+      error: () => {
+        alert('Error deleting touristAttraction')
+      }
+    });
+  }
+
+  editItem(touristAttraction: TouristAttraction) {
+    const dialogRef = this.dialog.open(TouristAttractionDialogComponent, {
+      width: '45vh',
+      panelClass: 'mat-dialog-container',
+      data: {
+        id: touristAttraction.attractionId,
+        name: touristAttraction.name,
+        location: touristAttraction.location,
+        description: touristAttraction.descriptionText,
+        category: touristAttraction.category,
+        createdAt: touristAttraction.createdAt,
+        offers: touristAttraction.offers,
+        entryPrice: touristAttraction.entryPrice,
+        imageUrl: touristAttraction.imagePath
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.touristAttractionService.getAllTouristAttractions().subscribe((destinations: TouristAttraction[]) => {
+        this.touristAttractionService.getAllTouristAttractions().subscribe({
+          next: (touristAttractions: TouristAttraction[]) => {
+            this.dataSource = new MatTableDataSource<TouristAttraction>(touristAttractions);
+          }
+        })
+      })
+    });
+  }
+
 }
