@@ -60,7 +60,6 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.touristAttractionService.getAllTouristAttractions().subscribe({
       next: (destinations: TouristAttraction[]) => {
         this.dataSource = new MatTableDataSource<TouristAttraction>(destinations);
-        console.log(this.dataSource)
       }
     })
   }

@@ -64,12 +64,10 @@ export class TouristAttractionPageComponent implements OnInit {
   }
 
   onChoice1Change(event: any) {
-    console.log((event.target as HTMLInputElement).value)
     this.selectedOption = (event.target as HTMLInputElement).value;
   }
 
   onChoice2Change(event: any) {
-    console.log((event.target as HTMLInputElement).value)
     this.selectedOption = (event.target as HTMLInputElement).value;
   }
 
