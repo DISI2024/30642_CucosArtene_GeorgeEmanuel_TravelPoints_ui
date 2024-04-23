@@ -35,7 +35,7 @@
                                       class="fas fa-info-circle"></i>
       </p>
       <p>Entry price: {{attraction.entryPrice}}<i></i></p>
-      <p>Offers: {{attraction.offers}}<i></i></p>
+      <p *ngIf="attraction.offers">Offers: {{attraction.offers}}<i></i></p>
     </div>
   </div>
 </section>

@@ -41,8 +41,7 @@ export class NavigationBarComponent {
         this.token = null
         this.router.navigate(['/home'])
       },
-      error: (error: any) =>  {
-        console.error(error)
+      error: () =>  {
         alert("LogOut failed")
       }
     })
