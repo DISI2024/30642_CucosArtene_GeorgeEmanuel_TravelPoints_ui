@@ -6,11 +6,13 @@ import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthService} from "../../services/auth.service";
+import { MatIcon } from '@angular/material/icon';
+import { MatLabel } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-register-dialog',
   standalone: true,
-  imports: [MatDialogModule, FormsModule, MatButton, HttpClientModule],
+  imports: [MatDialogModule, FormsModule, MatButton, HttpClientModule, MatIcon, MatLabel],
   providers: [AuthService],
   templateUrl: './register-dialog.component.html',
   styleUrl: './register-dialog.component.css'

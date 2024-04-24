@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoginDialogComponent} from "../login-dialog/login-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {NgIf} from "@angular/common";
@@ -18,11 +18,15 @@ import {jwtDecode} from "jwt-decode";
   templateUrl: './navigation-bar.component.html',
   styleUrl: './navigation-bar.component.css'
 })
-export class NavigationBarComponent {
-  token: any
+export class NavigationBarComponent implements OnInit{
+  
+  token: string | null = null;
 
   constructor(private dialog: MatDialog, private authService: AuthService, private router: Router) {
-    this.token = localStorage.getItem('token')
+  }
+
+  ngOnInit(): void {
+    this.token = localStorage.getItem('token');
   }
 
   openLoginDialog() {
@@ -32,7 +36,10 @@ export class NavigationBarComponent {
   }
 
   logOut() {
-    let tokenPayload: any = jwtDecode(this.token);
+    let tokenPayload: any;
+    if(this.token) {
+      tokenPayload = jwtDecode(this.token);
+    }
     let id = tokenPayload.id;
     this.authService.logOut(id).subscribe({
       next: (response: any) => {

@@ -42,21 +42,19 @@ import {TouristAttractionDialogComponent} from "../tourist-attraction-dialog/tou
     MatButton,
     MatFabButton,
     NgIf,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatPaginator
   ],
-  providers: [TouristAttractionService],
+  providers: [TouristAttractionService, MatPaginatorModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
 export class TableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['attractionId', 'imagePath', 'name', 'location', 'category', 'createdAt', 'descriptionText', 'entryPrice', 'offers', 'actions'];
   dataSource: MatTableDataSource<TouristAttraction> | any
-  @ViewChild(MatPaginator) paginator: MatPaginator | undefined
+  @ViewChild(MatPaginator) paginator!: MatPaginator
 
   constructor(private touristAttractionService: TouristAttractionService, public dialog: MatDialog) {
-  }
-
-  ngOnInit(): void {
     this.touristAttractionService.getAllTouristAttractions().subscribe({
       next: (destinations: TouristAttraction[]) => {
         this.dataSource = new MatTableDataSource<TouristAttraction>(destinations);
@@ -65,12 +63,16 @@ export class TableComponent implements OnInit, AfterViewInit {
     })
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
     } else {
       console.error('Paginator is undefined');
-    }
+    }  
+  }
+
+  ngOnInit(): void {
+    
   }
 
   addItem() {
