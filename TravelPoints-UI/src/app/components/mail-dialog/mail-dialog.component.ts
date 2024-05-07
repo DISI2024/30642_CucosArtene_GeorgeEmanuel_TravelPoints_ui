@@ -48,7 +48,7 @@ export class MailDialogComponent implements OnInit {
       mail.sender = this.sender
     }
     this.mailService.send(mail).subscribe((response: any) => {
-      if(response == 'true') {
+      if(response == true) {
         window.alert('Mail sent')
       } else {
         window.alert('Mail could not be sent')
