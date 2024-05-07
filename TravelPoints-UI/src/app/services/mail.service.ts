@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Mail} from "../models/Mail";
 
@@ -13,7 +13,9 @@ export class MailService {
   }
 
   send(mail: Mail): Observable<string> {
-    return this.httpClient.post<string>(this.baseURL + "/send", mail);
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    return this.httpClient.post<string>(this.baseURL + "/send", mail, {headers});
   }
 
 }
