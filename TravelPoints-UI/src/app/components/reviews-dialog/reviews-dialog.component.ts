@@ -19,6 +19,8 @@ import {
   MatCardTitleGroup,
 } from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
+import {NewReview} from "../../models/NewReview";
+import {ReviewService} from "../../services/review.service";
 import {CreatedReview} from "../../models/CreatedReview";
 import {HttpClientModule} from "@angular/common/http";
 import {NgForOf} from "@angular/common";
@@ -45,6 +47,7 @@ import {NgForOf} from "@angular/common";
     HttpClientModule,
     NgForOf
   ],
+  providers: [ReviewService],
   templateUrl: './reviews-dialog.component.html',
   styleUrl: './reviews-dialog.component.css'
 })
@@ -54,10 +57,14 @@ export class ReviewsDialogComponent implements OnInit {
   valid: boolean = true;
   reviews: CreatedReview[] = [];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+              private reviewService: ReviewService) {
   }
 
   ngOnInit() {
+    this.reviewService.getAllReviewsById(this.data.attractionId).subscribe(reviews => {
+      this.reviews = reviews
+    })
   }
 
   handleRateChange(newRating: number) {
@@ -67,6 +74,18 @@ export class ReviewsDialogComponent implements OnInit {
   addReviewAndRating() {
     this.valid = !(this.rating === 0 || this.reviewText === undefined);
     if (this.valid) {
+      let review: NewReview = new NewReview();
+      review.userId = this.data.userId
+      review.attractionId = this.data.attractionId
+      review.rating = this.rating
+      review.reviewText = this.reviewText
+      this.reviewService.addReview(review).subscribe(() => {
+        alert("Review added successfully!")
+        this.reviewText = undefined
+        this.reviewService.getAllReviewsById(this.data.attractionId).subscribe(reviews => {
+          this.reviews = reviews
+        })
+      })
     } else {
       alert("Please provide rating and a review!")
     }
