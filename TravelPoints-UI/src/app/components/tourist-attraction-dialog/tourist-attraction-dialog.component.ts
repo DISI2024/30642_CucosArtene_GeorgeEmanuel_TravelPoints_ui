@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from "@angul
 import {TouristAttractionService} from "../../services/tourist-attraction.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {TouristAttraction} from "../../models/TouristAttraction";
-import {NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
 
 const FORM_NAME: string = "name"
@@ -14,6 +14,11 @@ const FORM_DESCRIPTION: string = "descriptionText"
 const FORM_ENTRY_PRICE: string = "entryPrice"
 const FORM_OFFERS: string = "offers"
 const FORM_IMAGE_PATH: string = "imagePath"
+const FORM_OPENING_TIME: string = "openingTime"
+const FORM_CLOSING_TIME: string = "closingTime"
+const FORM_CONTACT_INFO: string = "contactInfo"
+const FORM_ADDRESS: string = "address"
+
 @Component({
   selector: 'app-destination-dialog',
   standalone: true,
@@ -21,14 +26,15 @@ const FORM_IMAGE_PATH: string = "imagePath"
     FormsModule,
     ReactiveFormsModule,
     NgIf,
-    HttpClientModule
+    HttpClientModule,
+    NgForOf
   ],
-  providers:[TouristAttractionService],
+  providers: [TouristAttractionService],
   templateUrl: './tourist-attraction-dialog.component.html',
   styleUrl: './tourist-attraction-dialog.component.css'
 })
 
-export class TouristAttractionDialogComponent implements OnInit{
+export class TouristAttractionDialogComponent implements OnInit {
   myForm: any
   id: string = ""
   location: string = ""
@@ -40,22 +46,33 @@ export class TouristAttractionDialogComponent implements OnInit{
   entryPrice: number = 0
   title: string = ""
   imagePath: string = "";
+  openingTime: string = ""
+  closingTime: string = ""
+  contactInfo: string = ""
+  address: string = ""
+  timeSlots: string[] = [];
 
   constructor(private fb: FormBuilder, private touristAttractionService: TouristAttractionService, public dialogRef: MatDialogRef<TouristAttractionDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.generateTimeSlots()
+  }
 
   ngOnInit(): void {
     this.myForm = this.fb.group({
-      name:[''],
+      name: [''],
       location: [''],
       category: [''],
       createdAt: new FormControl({value: '', disabled: true}),
       descriptionText: [''],
       entryPrice: [''],
       offers: [''],
-      imagePath:['']
+      imagePath: [''],
+      openingTime: [''],
+      closingTime: [''],
+      contactInfo: [''],
+      address: ['']
     });
-    if(this.data.id == -99) {
+    if (this.data.id == -99) {
       this.title = "New Tourist Attraction"
     } else {
       this.title = "Update: " + this.data.location
@@ -63,7 +80,7 @@ export class TouristAttractionDialogComponent implements OnInit{
     }
   }
 
-  onSubmit(){
+  onSubmit() {
     let touristAttraction = new TouristAttraction()
     touristAttraction.name = this.myForm.get(FORM_NAME).value;
     touristAttraction.location = this.myForm.get(FORM_LOCATION).value;
@@ -73,7 +90,12 @@ export class TouristAttractionDialogComponent implements OnInit{
     touristAttraction.entryPrice = this.myForm.get(FORM_ENTRY_PRICE).value;
     touristAttraction.offers = this.myForm.get(FORM_OFFERS).value;
     touristAttraction.imagePath = this.myForm.get(FORM_IMAGE_PATH).value;
-    if(this.data.id != -99) {
+    touristAttraction.openingTime = this.myForm.get(FORM_OPENING_TIME).value;
+    touristAttraction.closingTime = this.myForm.get(FORM_CLOSING_TIME).value;
+    touristAttraction.contactInfo = this.myForm.get(FORM_CONTACT_INFO).value;
+    touristAttraction.address = this.myForm.get(FORM_ADDRESS).value;
+    console.log(touristAttraction)
+    if (this.data.id != -99) {
       this.id = this.data.id
       touristAttraction.attractionId = this.data.attractionId
       this.touristAttractionService.updateTouristAttraction(touristAttraction).subscribe(() => {
@@ -87,5 +109,14 @@ export class TouristAttractionDialogComponent implements OnInit{
     this.dialogRef.close()
   }
 
+  generateTimeSlots() {
+    const startTime = 8;
+    const endTime = 24;
 
+    for (let hour = startTime; hour < endTime; hour++) {
+      this.timeSlots.push(`${hour.toString().padStart(2, '0')}:00`);
+      this.timeSlots.push(`${hour.toString().padStart(2, '0')}:30`);
+    }
+    this.timeSlots.push("00:00");
+  }
 }
