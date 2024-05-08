@@ -169,6 +169,28 @@
   margin-right: 16px;
 }
 
+.heart-icons {
+  position: absolute;
+  width: 100%;
+  top: 10px;
+}
+
+.heart-left {
+  pointer-events: auto;
+  position: absolute;
+  left: 10px;
+  color: white;
+  font-size: 24px;
+}
+
+.heart-right {
+  position: absolute;
+  right: 10px;
+  color: red;
+  font-size: 24px;
+}
+
+
 
 
 

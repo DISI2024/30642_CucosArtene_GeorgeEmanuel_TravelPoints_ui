@@ -28,6 +28,10 @@
 
 <section id="destinations" class="destination-cards">
   <div *ngFor="let attraction of touristAttractionsResult; index as i" class="card">
+    <div class="heart-icons">
+      <mat-icon (click)="addToWishlist(attraction.attractionId!)" *ngIf="!checkInWishlist(attraction.attractionId!)" class="heart-left">favorite</mat-icon>
+      <mat-icon  *ngIf="checkInWishlist(attraction.attractionId!)" class="heart-right">favorite</mat-icon>
+    </div>
     <img [src]="attraction.imagePath" alt="TouristAttraction 1">
     <div class="card-body">
       <h4>{{attraction.name}}, {{attraction.location}}</h4>
