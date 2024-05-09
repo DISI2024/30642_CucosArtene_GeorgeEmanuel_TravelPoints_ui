@@ -41,6 +41,7 @@ export class LoginDialogComponent {
           this.router.navigate(['/admin-dashboard'])
         } else {
           this.router.navigate(['/tourist-attractions'])
+          window.location.reload()
         }
       },
       error: () => alert("Login failed")

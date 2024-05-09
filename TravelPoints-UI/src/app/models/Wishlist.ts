@@ -1,6 +1,6 @@
 export class Wishlist {
     wishlistId: number | undefined;
     userId: number | undefined;
-    attractionIds: number[] = [];
+    attractionsIds: number[] = [];
     addedAt: string | undefined;
 }
