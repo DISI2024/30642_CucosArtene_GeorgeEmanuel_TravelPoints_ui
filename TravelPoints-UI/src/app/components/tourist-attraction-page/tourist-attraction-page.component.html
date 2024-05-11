@@ -34,8 +34,11 @@
       <p>{{attraction.category}}   <i (click)="openDetailsDialog(attraction.descriptionText!)"
                                       class="fas fa-info-circle"></i>
       </p>
-      <p>Entry price: {{attraction.entryPrice}}</p>
+      <p>Entry price: {{attraction.entryPrice}} EUR</p>
       <p *ngIf="attraction.offers">Offers: {{attraction.offers}}</p>
+      <p>Operational hours: {{attraction.openingTime}} - {{attraction.closingTime}}</p>
+      <p>Contact information: {{attraction.contactInfo}}</p>
+      <p>Address: {{attraction.address}}</p>
     </div>
     <button *ngIf="this.token && this.loggedUserType === 'TOURIST'" mat-button color="warn"
             (click)="openReviewsDialog(attraction.attractionId!)">Reviews
