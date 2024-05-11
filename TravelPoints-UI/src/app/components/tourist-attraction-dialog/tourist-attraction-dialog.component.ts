@@ -94,7 +94,6 @@ export class TouristAttractionDialogComponent implements OnInit {
     touristAttraction.closingTime = this.myForm.get(FORM_CLOSING_TIME).value;
     touristAttraction.contactInfo = this.myForm.get(FORM_CONTACT_INFO).value;
     touristAttraction.address = this.myForm.get(FORM_ADDRESS).value;
-    console.log(touristAttraction)
     if (this.data.id != -99) {
       this.id = this.data.id
       touristAttraction.attractionId = this.data.attractionId
