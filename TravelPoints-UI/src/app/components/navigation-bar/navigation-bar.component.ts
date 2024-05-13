@@ -21,7 +21,7 @@ import {WebsocketService} from "../../services/websocket.service";
 })
 export class NavigationBarComponent implements OnInit {
 
-  token: string | null = null;
+  token: string | undefined
 
   constructor(
     private dialog: MatDialog,
@@ -32,7 +32,7 @@ export class NavigationBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.token = localStorage.getItem('token');
+    this.token = localStorage.getItem('token') ?? undefined;
   }
 
   openLoginDialog() {
@@ -47,12 +47,15 @@ export class NavigationBarComponent implements OnInit {
       tokenPayload = jwtDecode(this.token);
     }
     let id = tokenPayload.id;
+    let loggedUserType = tokenPayload.userType
     this.authService.logOut(id).subscribe({
       next: (response: any) => {
         alert("LogOut successful!")
         localStorage.clear()
-        this.token = null
-        this.websocketService.unsubscribeAndDisconnect(id)
+        this.token = undefined
+        if (loggedUserType === 'TOURIST') {
+          this.websocketService.unsubscribeAndDisconnect(id)
+        }
         this.router.navigate(['/home'])
       },
       error: () => {
