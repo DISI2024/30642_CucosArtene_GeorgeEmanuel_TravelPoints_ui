@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>
+  Reviews
+</h1>
+<mat-dialog-content class="dialog-content">
+  <app-rating (ratingChange)="handleRateChange($event)"></app-rating>
+  <div class="form-group">
+    <textarea [(ngModel)]="reviewText" class="form-control" placeholder="Enter review" rows="1"></textarea>
+  </div>
+  <hr style="border-style: dotted;">
+  <mat-card *ngFor="let review of reviews" class="review-card">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>{{review.userName}}</mat-card-title>
+        <img class="review-card-img" src="assets/images/avatar.png">
+        <mat-card-subtitle>
+          <div class="rating">
+            <span class="rating-number">{{review.rating}}</span>
+            <mat-icon class="star-icon">star</mat-icon>
+          </div>
+        </mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+      {{review.reviewText}}
+    </mat-card-content>
+  </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions style="margin-left: 80%">
+  <button color="primary" mat-button cdkFocusInitial (click)="addReviewAndRating()">Add</button>
+  <button color="warn" mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
