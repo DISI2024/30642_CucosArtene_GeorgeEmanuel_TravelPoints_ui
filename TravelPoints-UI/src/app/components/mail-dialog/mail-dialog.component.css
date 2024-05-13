@@ -1,0 +1,32 @@
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.playback-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
+input.ng-valid.ng-touched, textarea.ng-valid.ng-touched {
+  border-color: #28a745;
+}
+
+
+button.btn-primary {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #666666;
+  border-color: #80bdff;
+}

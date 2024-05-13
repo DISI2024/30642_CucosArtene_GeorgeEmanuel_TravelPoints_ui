@@ -13,18 +13,10 @@ export class WishlistService {
   }
 
   getWishlistByUserId(userId: number): Observable<Wishlist> {
-    let token = localStorage.getItem("token")
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-    return this.httpClient.get<Wishlist>(this.baseURL + "/getWishlist/" + userId, {headers: headers});
+    return this.httpClient.get<Wishlist>(this.baseURL + "/getWishlist/" + userId);
   }
 
   addTouristAttractionToWishlist(userId: number, attractionId: number): Observable<any> {
-    let token = localStorage.getItem("token")
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-    return this.httpClient.post<any>(this.baseURL + "/addTouristAttraction/" + userId + "/" + attractionId, {}, {headers: headers});
+    return this.httpClient.post<any>(this.baseURL + "/addTouristAttraction/" + userId + "/" + attractionId, {});
   }
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {User} from "../models/User";
 
 import {Observable} from "rxjs";
@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class AuthService {
-  baseURL: string = "http://localhost:8888/auth";
+  readonly baseURL: string = "http://localhost:8888/auth";
 
   constructor(private httpClient: HttpClient) {
   }
@@ -19,19 +19,13 @@ export class AuthService {
         password: password
       }
     )
-    const headers = {'Content-Type': 'application/json'};
-    return this.httpClient.post<string>(this.baseURL + "/login", body, {headers});
+    return this.httpClient.post<string>(this.baseURL + "/login", body);
   }
   register(user: User): Observable<User> {
-    const headers = {'Content-Type': 'application/json'};
-    return this.httpClient.post<User>(this.baseURL + "/register", user, {headers});
+    return this.httpClient.post<User>(this.baseURL + "/register", user);
   }
 
   logOut(userId: number) {
-    let token = localStorage.getItem("token")
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-    return this.httpClient.put<string>(this.baseURL + "/logout/" + userId, {headers});
+    return this.httpClient.put<string>(this.baseURL + "/logout/" + userId, null);
   }
 }

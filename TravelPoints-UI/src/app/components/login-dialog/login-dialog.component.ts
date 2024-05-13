@@ -41,7 +41,6 @@ export class LoginDialogComponent {
           this.router.navigate(['/admin-dashboard'])
         } else {
           this.router.navigate(['/tourist-attractions'])
-          window.location.reload()
         }
       },
       error: () => alert("Login failed")
@@ -50,7 +49,7 @@ export class LoginDialogComponent {
 
   openRegisterDialog() {
     this.dialog.open(RegisterDialogComponent, {
-      width: '100vh'
+      width: '50vw'
     });
   }
 }
