@@ -6,6 +6,7 @@ import {AuthService} from "../../services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {jwtDecode} from "jwt-decode";
+import {ResetPasswordDialogComponent} from "../reset-password-dialog/reset-password-dialog.component";
 
 @Component({
   selector: 'app-navigation-bar',
@@ -19,7 +20,7 @@ import {jwtDecode} from "jwt-decode";
   styleUrl: './navigation-bar.component.css'
 })
 export class NavigationBarComponent implements OnInit{
-  
+
   token: string | null = null;
 
   constructor(private dialog: MatDialog, private authService: AuthService, private router: Router) {
@@ -52,5 +53,11 @@ export class NavigationBarComponent implements OnInit{
         alert("LogOut failed")
       }
     })
+  }
+
+  openResetPasswordDialog() {
+    this.dialog.open(ResetPasswordDialogComponent, {
+      width: '100vh'
+    });
   }
 }

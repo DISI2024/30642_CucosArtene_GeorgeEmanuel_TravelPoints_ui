@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../models/User";
-
 import {Observable} from "rxjs";
+import {ResetPasswordDemand} from "../models/ResetPasswordDemand";
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +33,11 @@ export class AuthService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
     return this.httpClient.put<string>(this.baseURL + "/logout/" + userId, {headers});
+  }
+
+  resetPassword(resetPasswordDemand: ResetPasswordDemand) {
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    return this.httpClient.post<string>(this.baseURL + "/resetPassword", resetPasswordDemand, {headers});
   }
 }
