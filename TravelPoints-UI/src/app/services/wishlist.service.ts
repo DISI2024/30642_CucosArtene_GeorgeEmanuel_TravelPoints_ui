@@ -7,7 +7,7 @@ import {Wishlist} from "../models/Wishlist";
   providedIn: 'root'
 })
 export class WishlistService {
-  baseURL: string = "http://localhost:8888/wishlist";
+  readonly baseURL: string = "http://localhost:8888/wishlist";
 
   constructor(private httpClient: HttpClient) {
   }

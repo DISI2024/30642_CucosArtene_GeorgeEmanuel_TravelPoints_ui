@@ -132,4 +132,8 @@ export class TouristAttractionPageComponent implements OnInit {
       }
     })
   }
+
+  checkTouristRole() {
+    return this.token && this.loggedUserType === 'TOURIST'
+  }
 }
