@@ -9,7 +9,8 @@ export class RequestInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let headers = req.headers;
-    if (req.url.includes('/auth/register') || req.url.includes('/auth/login') || req.url.includes('/auth/resetPassword')|| req.url.includes('/attractions/getAll')) {
+    if (req.url.includes('/auth/register') || req.url.includes('/auth/login') || req.url.includes('/auth/resetPassword')
+      || req.url.includes('/attractions/getAll') || req.url.includes('/mail/send')) {
       headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
     } else {

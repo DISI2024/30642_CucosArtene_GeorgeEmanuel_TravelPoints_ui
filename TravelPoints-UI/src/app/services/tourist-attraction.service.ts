@@ -7,7 +7,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class TouristAttractionService {
-  baseURL: string = "http://localhost:8888/attractions";
+  readonly baseURL: string = "http://localhost:8888/attractions";
 
   constructor(private httpClient: HttpClient) {
   }
