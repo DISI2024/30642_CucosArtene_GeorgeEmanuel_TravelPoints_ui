@@ -20,7 +20,6 @@ import {WebsocketService} from "../../services/websocket.service";
   styleUrl: './navigation-bar.component.css'
 })
 export class NavigationBarComponent implements OnInit {
-
   token: string | undefined
 
   constructor(
@@ -37,7 +36,7 @@ export class NavigationBarComponent implements OnInit {
 
   openLoginDialog() {
     this.dialog.open(LoginDialogComponent, {
-      width: '100vh'
+      width: '50vw'
     });
   }
 
