@@ -17,7 +17,7 @@ export class HomePageComponent {
   }
   openMailDialog() {
     this.dialog.open(MailDialogComponent, {
-      width: '100vh'
+      width: '40vw'
     });
   }
 

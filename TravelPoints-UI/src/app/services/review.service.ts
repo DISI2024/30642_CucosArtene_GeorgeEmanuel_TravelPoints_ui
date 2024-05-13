@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {NewReview} from "../models/NewReview";
 import {CreatedReview} from "../models/CreatedReview";
@@ -8,7 +8,7 @@ import {CreatedReview} from "../models/CreatedReview";
   providedIn: 'root'
 })
 export class ReviewService {
-  baseURL: string = "http://localhost:8888/reviews";
+  readonly baseURL: string = "http://localhost:8888/reviews";
 
   constructor(private httpClient: HttpClient) {
   }

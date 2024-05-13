@@ -53,6 +53,8 @@ export class MailDialogComponent implements OnInit {
       } else {
         window.alert('Mail could not be sent')
       }
+    }, error => {
+      window.alert('Mail could not be sent')
     })
   }
 
