@@ -69,3 +69,8 @@ button[type="submit"] {
 form {
   margin-bottom: 1rem;
 }
+
+.custom-scroll {
+  max-height: 100vh;
+  overflow-y: auto;
+}

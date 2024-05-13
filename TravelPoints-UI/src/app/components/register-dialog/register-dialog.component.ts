@@ -6,8 +6,8 @@ import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthService} from "../../services/auth.service";
-import { MatIcon } from '@angular/material/icon';
-import { MatLabel } from '@angular/material/form-field';
+import {MatIcon} from '@angular/material/icon';
+import {MatLabel} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-register-dialog',
@@ -37,6 +37,10 @@ export class RegisterDialogComponent {
     if (!passwordRegex.test(<string>this.user.password)) {
       this.valid = false
       alert("Check the correct format for password")
+    }
+    if (this.user.name === undefined) {
+      this.valid = false
+      alert("Name cannot be empty!")
     }
     if (this.valid) {
       this.authService.register(this.user).subscribe({

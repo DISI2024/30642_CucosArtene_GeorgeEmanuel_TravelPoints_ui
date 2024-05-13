@@ -10,4 +10,8 @@ export class TouristAttraction {
   entryPrice: number | undefined;
   offers: string | undefined;
   createdAt: string | undefined;
+  openingTime: string | undefined;
+  closingTime: string | undefined;
+  contactInfo: string | undefined;
+  address: string | undefined;
 }

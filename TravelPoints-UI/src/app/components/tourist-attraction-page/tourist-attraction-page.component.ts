@@ -4,7 +4,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {FormsModule} from "@angular/forms";
-import {MatIconButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
@@ -14,6 +14,8 @@ import {
 } from "../tourist-attraction-details-dialog/tourist-attraction-details-dialog.component";
 import {HttpClientModule} from "@angular/common/http";
 import {TouristAttractionService} from "../../services/tourist-attraction.service";
+import {ReviewsDialogComponent} from "../reviews-dialog/reviews-dialog.component";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-objectives-page',
@@ -30,7 +32,8 @@ import {TouristAttractionService} from "../../services/tourist-attraction.servic
     MatRadioButton,
     NgIf,
     MatRadioGroup,
-    HttpClientModule
+    HttpClientModule,
+    MatButton
   ],
   providers: [TouristAttractionService],
   templateUrl: './tourist-attraction-page.component.html',
@@ -41,12 +44,22 @@ export class TouristAttractionPageComponent implements OnInit {
   touristAttractionsResult: TouristAttraction[] = []
   selectedOption: string | undefined
   searchInput: string | undefined
+  token: any
+  loggedUserId: number | undefined
+  loggedUserType: string | undefined
 
   constructor(private dialog: MatDialog,
               private touristAttractionService: TouristAttractionService) {
   }
 
   ngOnInit() {
+    this.token = localStorage.getItem('token')
+    let tokenPayload: any;
+    if (this.token) {
+      tokenPayload = jwtDecode(this.token);
+      this.loggedUserId = tokenPayload.id;
+      this.loggedUserType = tokenPayload.userType;
+    }
     this.selectedOption = 'category'
     this.touristAttractionService.getAllTouristAttractions().subscribe({
       next: data => {
@@ -60,6 +73,16 @@ export class TouristAttractionPageComponent implements OnInit {
     this.dialog.open(TouristAttractionDetailsDialogComponent, {
       width: '100vh',
       data: details,
+    });
+  }
+
+  openReviewsDialog(attractionId: number) {
+    this.dialog.open(ReviewsDialogComponent, {
+      width: '100vh',
+      data: {
+        attractionId: attractionId,
+        userId: this.loggedUserId
+      }
     });
   }
 
