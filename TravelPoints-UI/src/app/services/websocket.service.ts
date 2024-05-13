@@ -8,7 +8,7 @@ import {Notification} from "../models/Notification";
   providedIn: 'root',
 })
 export class WebsocketService {
-  baseUrl: string = 'http://localhost:8888/websocket'
+  readonly baseUrl: string = 'http://localhost:8888/websocket'
   stompClient: any;
 
   constructor() {
