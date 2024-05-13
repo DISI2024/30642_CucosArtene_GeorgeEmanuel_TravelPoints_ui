@@ -14,8 +14,11 @@ import {
 } from "../tourist-attraction-details-dialog/tourist-attraction-details-dialog.component";
 import {HttpClientModule} from "@angular/common/http";
 import {TouristAttractionService} from "../../services/tourist-attraction.service";
+import {WishlistService} from "../../services/wishlist.service";
+import {Router} from "@angular/router";
 import {ReviewsDialogComponent} from "../reviews-dialog/reviews-dialog.component";
 import {jwtDecode} from "jwt-decode";
+import {Wishlist} from "../../models/Wishlist";
 
 @Component({
   selector: 'app-objectives-page',
@@ -35,7 +38,7 @@ import {jwtDecode} from "jwt-decode";
     HttpClientModule,
     MatButton
   ],
-  providers: [TouristAttractionService],
+  providers: [TouristAttractionService, WishlistService],
   templateUrl: './tourist-attraction-page.component.html',
   styleUrl: './tourist-attraction-page.component.css'
 })
@@ -47,19 +50,19 @@ export class TouristAttractionPageComponent implements OnInit {
   token: any
   loggedUserId: number | undefined
   loggedUserType: string | undefined
+  wishlist: Wishlist = new Wishlist()
 
   constructor(private dialog: MatDialog,
-              private touristAttractionService: TouristAttractionService) {
+              private touristAttractionService: TouristAttractionService,
+              private wishlistService: WishlistService,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.token = localStorage.getItem('token')
-    let tokenPayload: any;
-    if (this.token) {
-      tokenPayload = jwtDecode(this.token);
-      this.loggedUserId = tokenPayload.id;
-      this.loggedUserType = tokenPayload.userType;
-    }
+    this.router.events.subscribe(() => {
+      window.location.reload()
+    });
+    this.getTokenInformation()
     this.selectedOption = 'category'
     this.touristAttractionService.getAllTouristAttractions().subscribe({
       next: data => {
@@ -67,18 +70,25 @@ export class TouristAttractionPageComponent implements OnInit {
         this.touristAttractionsResult = this.touristAttractions
       }
     })
+    if (this.loggedUserId) {
+      this.wishlistService.getWishlistByUserId(this.loggedUserId).subscribe({
+        next: data => {
+          this.wishlist = data
+        }
+      })
+    }
   }
 
   openDetailsDialog(details: string) {
     this.dialog.open(TouristAttractionDetailsDialogComponent, {
-      width: '100vh',
+      width: '50vw',
       data: details,
     });
   }
 
   openReviewsDialog(attractionId: number) {
     this.dialog.open(ReviewsDialogComponent, {
-      width: '100vh',
+      width: '50vw',
       data: {
         attractionId: attractionId,
         userId: this.loggedUserId
@@ -112,5 +122,33 @@ export class TouristAttractionPageComponent implements OnInit {
         this.filterByLocation(this.searchInput!)
       }
     }
+  }
+
+  getTokenInformation() {
+    this.token = localStorage.getItem('token')
+    let tokenPayload: any;
+    if (this.token) {
+      tokenPayload = jwtDecode(this.token);
+      this.loggedUserId = tokenPayload.id;
+      this.loggedUserType = tokenPayload.userType;
+    }
+  }
+
+  checkInWishlist(attractionId: number): boolean {
+    const foundItem = this.wishlist.attractionsIds.find(id => id === attractionId);
+    return !!foundItem;
+  }
+
+  addToWishlist(attractionId: number) {
+    this.wishlistService.addTouristAttractionToWishlist(this.loggedUserId!, attractionId).subscribe({
+      next: () => {
+        this.wishlist.attractionsIds.push(attractionId)
+        alert("Tourist attraction added to wishlist!")
+      }
+    })
+  }
+
+  checkTouristRole() {
+    return this.token && this.loggedUserType === 'TOURIST'
   }
 }

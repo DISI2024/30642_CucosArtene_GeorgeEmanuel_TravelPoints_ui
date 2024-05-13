@@ -19,7 +19,7 @@ import {jwtDecode} from "jwt-decode";
   styleUrl: './navigation-bar.component.css'
 })
 export class NavigationBarComponent implements OnInit{
-  
+
   token: string | null = null;
 
   constructor(private dialog: MatDialog, private authService: AuthService, private router: Router) {
@@ -31,7 +31,7 @@ export class NavigationBarComponent implements OnInit{
 
   openLoginDialog() {
     this.dialog.open(LoginDialogComponent, {
-      width: '100vh'
+      width: '50vw'
     });
   }
 

@@ -76,7 +76,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   addItem() {
     const dialogRef = this.dialog.open(TouristAttractionDialogComponent, {
-      width: '45vh',
+      width: '25vw',
       panelClass: 'mat-dialog-container',
       data: {
         id: -99,
@@ -109,7 +109,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   editItem(touristAttraction: TouristAttraction) {
     const dialogRef = this.dialog.open(TouristAttractionDialogComponent, {
-      width: '45vh',
+      width: '25vw',
       panelClass: 'mat-dialog-container',
       data: {
         attractionId: touristAttraction.attractionId,
