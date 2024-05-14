@@ -6,6 +6,7 @@ import {AuthService} from "../../services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {jwtDecode} from "jwt-decode";
+import {WebsocketService} from "../../services/websocket.service";
 import {ResetPasswordDialogComponent} from "../reset-password-dialog/reset-password-dialog.component";
 
 @Component({
@@ -19,15 +20,19 @@ import {ResetPasswordDialogComponent} from "../reset-password-dialog/reset-passw
   templateUrl: './navigation-bar.component.html',
   styleUrl: './navigation-bar.component.css'
 })
-export class NavigationBarComponent implements OnInit{
+export class NavigationBarComponent implements OnInit {
+  token: string | undefined
 
-  token: string | null = null;
-
-  constructor(private dialog: MatDialog, private authService: AuthService, private router: Router) {
+  constructor(
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private router: Router,
+    private websocketService: WebsocketService
+  ) {
   }
 
   ngOnInit(): void {
-    this.token = localStorage.getItem('token');
+    this.token = localStorage.getItem('token') ?? undefined;
   }
 
   openLoginDialog() {
@@ -38,18 +43,22 @@ export class NavigationBarComponent implements OnInit{
 
   logOut() {
     let tokenPayload: any;
-    if(this.token) {
+    if (this.token) {
       tokenPayload = jwtDecode(this.token);
     }
     let id = tokenPayload.id;
+    let loggedUserType = tokenPayload.userType
     this.authService.logOut(id).subscribe({
       next: (response: any) => {
         alert("LogOut successful!")
         localStorage.clear()
-        this.token = null
+        this.token = undefined
+        if (loggedUserType === 'TOURIST') {
+          this.websocketService.unsubscribeAndDisconnect(id)
+        }
         this.router.navigate(['/home'])
       },
-      error: () =>  {
+      error: () => {
         alert("LogOut failed")
       }
     })
