@@ -50,7 +50,7 @@ import {TouristAttractionDialogComponent} from "../tourist-attraction-dialog/tou
   styleUrl: './table.component.css'
 })
 export class TableComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['attractionId', 'imagePath', 'name', 'location', 'category', 'createdAt', 'descriptionText', 'entryPrice', 'offers', 'actions'];
+  displayedColumns: string[] = ['attractionId', 'imagePath', 'name', 'location', 'category', 'entryPrice', 'openingTime', 'closingTime', 'contactInfo', 'address', 'actions'];
   dataSource: MatTableDataSource<TouristAttraction> | any
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
@@ -67,16 +67,16 @@ export class TableComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator = this.paginator;
     } else {
       console.error('Paginator is undefined');
-    }  
+    }
   }
 
   ngOnInit(): void {
-    
+
   }
 
   addItem() {
     const dialogRef = this.dialog.open(TouristAttractionDialogComponent, {
-      width: '45vh',
+      width: '25vw',
       panelClass: 'mat-dialog-container',
       data: {
         id: -99,
@@ -109,7 +109,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   editItem(touristAttraction: TouristAttraction) {
     const dialogRef = this.dialog.open(TouristAttractionDialogComponent, {
-      width: '45vh',
+      width: '25vw',
       panelClass: 'mat-dialog-container',
       data: {
         attractionId: touristAttraction.attractionId,
@@ -120,7 +120,11 @@ export class TableComponent implements OnInit, AfterViewInit {
         createdAt: touristAttraction.createdAt,
         offers: touristAttraction.offers,
         entryPrice: touristAttraction.entryPrice,
-        imagePath: touristAttraction.imagePath
+        imagePath: touristAttraction.imagePath,
+        openingTime: touristAttraction.openingTime,
+        closingTime: touristAttraction.closingTime,
+        contactInfo: touristAttraction.contactInfo,
+        address: touristAttraction.address
       }
     });
 
@@ -134,6 +138,4 @@ export class TableComponent implements OnInit, AfterViewInit {
       })
     });
   }
-
-
 }

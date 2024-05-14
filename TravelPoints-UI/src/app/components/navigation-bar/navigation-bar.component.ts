@@ -32,7 +32,7 @@ export class NavigationBarComponent implements OnInit{
 
   openLoginDialog() {
     this.dialog.open(LoginDialogComponent, {
-      width: '100vh'
+      width: '50vw'
     });
   }
 

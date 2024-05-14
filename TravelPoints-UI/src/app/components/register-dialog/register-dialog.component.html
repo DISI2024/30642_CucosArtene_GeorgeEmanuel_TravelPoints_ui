@@ -17,6 +17,11 @@
                      name="password" ngbTooltip="Password should contain: at least 7 characters, at least 1 upper case, at least 1 lower
                      case and at least 1 special character!"/>
             </div>
+            <div class="form-outline mb-4">
+              <label class="myDIV" title="User cannot be null">Name</label>
+              <input [(ngModel)]="user.name" type="text" class="form-control form-control-lg"
+                     name="name" ngbTooltip="Name cannot be empty!"/>
+            </div>
             <div class="pt-1 mb-4">
               <button style="background-color: #8FA08E" mat-button (click)="onClickRegister()">Register</button>
             </div>

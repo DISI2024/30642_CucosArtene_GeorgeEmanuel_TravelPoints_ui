@@ -1,9 +1,10 @@
-<div class="box rounded-dialog">
+<div class="box rounded-dialog; custom-scroll">
   <h2 class="text-center">{{title}}</h2>
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="container">
     <div *ngIf="!imagePath && this.data.id==-99" class="form-group">
       <label for="imagePath">Image Path</label>
-      <input type="text" formControlName="imagePath" id="imagePath" class="form-control" placeholder="Enter Image Url" [(ngModel)]="imagePath">
+      <input type="text" formControlName="imagePath" id="imagePath" class="form-control" placeholder="Enter Image Url"
+             [(ngModel)]="imagePath">
     </div>
     <div *ngIf="imagePath" style="position: relative; display: inline-block;">
       <img [src]="imagePath" alt="Uploaded Image" style="display: block; width: 100%; height: auto;"/>
@@ -30,12 +31,14 @@
 
     <div class="form-group">
       <label for="descriptionText">Description</label>
-      <textarea formControlName="descriptionText" id="descriptionText" class="form-control" placeholder="Enter description" rows="1"></textarea>
+      <textarea formControlName="descriptionText" id="descriptionText" class="form-control"
+                placeholder="Enter description" rows="1"></textarea>
     </div>
 
     <div class="form-group">
       <label for="entryPrice">Entry Price</label>
-      <input type="text" formControlName="entryPrice" id="entryPrice" class="form-control" placeholder="Enter entry price">
+      <input type="text" formControlName="entryPrice" id="entryPrice" class="form-control"
+             placeholder="Enter entry price">
     </div>
 
     <div class="form-group">
@@ -45,7 +48,32 @@
 
     <div *ngIf="this.data.id!=-99" class="form-group">
       <label for="createdAt">Created At</label>
-      <input type="text" formControlName="createdAt" id="createdAt" class="form-control" placeholder="" >
+      <input type="text" formControlName="createdAt" id="createdAt" class="form-control" placeholder="">
+    </div>
+
+    <div class="form-group">
+      <label for="openingTime">Opening time</label>
+      <select formControlName="openingTime" id="openingTime" class="form-control">
+        <option *ngFor="let timeSlot of timeSlots" [value]="timeSlot">{{ timeSlot }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="closingTime">Closing time</label>
+      <select formControlName="closingTime" id="closingTime" class="form-control">
+        <option *ngFor="let timeSlot of timeSlots" [value]="timeSlot">{{ timeSlot }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="contactInfo">Contact Information</label>
+      <input type="text" formControlName="contactInfo" id="contactInfo" class="form-control"
+             placeholder="Enter contact info">
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input type="text" formControlName="address" id="address" class="form-control" placeholder="Enter address">
     </div>
 
     <button type="submit" class="btn-primary">Submit</button>

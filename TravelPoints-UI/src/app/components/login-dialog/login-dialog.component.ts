@@ -49,7 +49,7 @@ export class LoginDialogComponent {
 
   openRegisterDialog() {
     this.dialog.open(RegisterDialogComponent, {
-      width: '100vh'
+      width: '50vw'
     });
   }
 }
