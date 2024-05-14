@@ -1,6 +1,6 @@
 import {TouristAttraction} from "./TouristAttraction";
 
-export class TouristAttractionInWishlist {
+export class TouristAttractionsInWishlist {
   wishlistId: number | undefined;
   userId: number | undefined;
   attractionDetailDTOList: TouristAttraction[] = [];

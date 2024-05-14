@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Wishlist} from "../models/Wishlist";
+import {TouristAttractionsInWishlist} from "../models/TouristAttractionsInWishlist";
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,11 @@ export class WishlistService {
     return this.httpClient.post<any>(this.baseURL + "/addTouristAttraction/" + userId + "/" + attractionId, {});
   }
 
-  getWishlistTouristAttractionsByUserId(userId: number): Observable<Wishlist> {
-    return this.httpClient.get<Wishlist>(this.baseURL + "/getWishlistAndAttraction/" + userId);
+  getWishlistTouristAttractionsByUserId(userId: number): Observable<TouristAttractionsInWishlist> {
+    return this.httpClient.get<TouristAttractionsInWishlist>(this.baseURL + "/getWishlistAndAttraction/" + userId);
   }
 
-  deleteTouristAttractionFromWishlist(userId: number, attractionId: number):Observable<any> {
-    return this.httpClient.delete<any>(this.baseURL + "/removeTouristAttraction/" + userId + "/" + attractionId);
+  deleteTouristAttractionFromWishlist(userId: number, attractionId: number): Observable<any> {
+    return this.httpClient.put<any>(this.baseURL + "/removeTouristAttraction/" + userId + "/" + attractionId, {});
   }
 }

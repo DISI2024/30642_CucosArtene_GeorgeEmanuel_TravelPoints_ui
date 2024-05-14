@@ -18,7 +18,7 @@ import {jwtDecode} from "jwt-decode";
   templateUrl: './navigation-bar.component.html',
   styleUrl: './navigation-bar.component.css'
 })
-export class NavigationBarComponent implements OnInit{
+export class NavigationBarComponent implements OnInit {
 
   token: string | null = null;
 
@@ -37,7 +37,7 @@ export class NavigationBarComponent implements OnInit{
 
   logOut() {
     let tokenPayload: any;
-    if(this.token) {
+    if (this.token) {
       tokenPayload = jwtDecode(this.token);
     }
     let id = tokenPayload.id;
@@ -48,9 +48,18 @@ export class NavigationBarComponent implements OnInit{
         this.token = null
         this.router.navigate(['/home'])
       },
-      error: () =>  {
+      error: () => {
         alert("LogOut failed")
       }
     })
+  }
+
+  checkTouristRole() {
+    if (this.token) {
+      let tokenPayload: any = jwtDecode(this.token)
+      let userType = tokenPayload.userType;
+      return userType === 'TOURIST'
+    }
+    return false
   }
 }

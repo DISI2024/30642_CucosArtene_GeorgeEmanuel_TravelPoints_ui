@@ -1,0 +1,29 @@
+<app-navigation-bar></app-navigation-bar>
+
+<header class="hero">
+  <h1>My wishlist</h1>
+</header>
+
+<section id="destinations" class="destination-cards">
+  <div *ngFor="let attraction of touristAttractionsInWishlist.attractionDetailDTOList; index as i" class="card">
+    <img [src]="attraction.imagePath" alt="TouristAttraction 1">
+    <div class="card-body">
+      <h4>{{attraction.name}}, {{attraction.location}}</h4>
+      <p>{{attraction.category}}</p>
+      <p>Entry price: {{attraction.entryPrice}} EUR</p>
+      <p *ngIf="attraction.offers">Offers: {{attraction.offers}}</p>
+      <p>Operational hours: {{attraction.openingTime}} - {{attraction.closingTime}}</p>
+      <p>Contact information: {{attraction.contactInfo}}</p>
+      <p>Address: {{attraction.address}}</p>
+    </div>
+    <button mat-button color="warn"
+            (click)="deleteFromWishlist(attraction.attractionId!)">Delete
+    </button>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2024 Travel Points. All rights reserved.</p>
+  </div>
+</footer>

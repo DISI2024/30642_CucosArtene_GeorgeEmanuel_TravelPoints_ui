@@ -151,4 +151,13 @@ export class TouristAttractionPageComponent implements OnInit {
   checkTouristRole() {
     return this.token && this.loggedUserType === 'TOURIST'
   }
+
+  checkHourIntervalForReview(attraction: TouristAttraction): boolean {
+    const now = new Date();
+    let hour = ("0" + now.getHours()).slice(-2);
+    if (attraction.closingTime!.substring(0, 2) === '00') {
+      return hour >= attraction.openingTime!.substring(0, 2) && hour <= '24'
+    }
+    return hour >= attraction.openingTime!.substring(0, 2) && hour <= attraction.closingTime!.substring(0, 2)
+  }
 }

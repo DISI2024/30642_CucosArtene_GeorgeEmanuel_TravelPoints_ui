@@ -5,6 +5,7 @@
     <li><a href="/tourist-attractions">Tourist attractions</a></li>
     <li><a href="/home#contact">Contact</a></li>
     <li *ngIf="!token" (click)="openLoginDialog()"><a>Login</a></li>
+    <li *ngIf="checkTouristRole()"><a href="/my-wishlist">My wishlist</a></li>
     <li *ngIf="token" (click)="logOut()"><a>Logout</a></li>
   </ul>
 </nav>
