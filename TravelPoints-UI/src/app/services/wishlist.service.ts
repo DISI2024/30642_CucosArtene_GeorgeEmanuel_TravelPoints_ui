@@ -19,4 +19,12 @@ export class WishlistService {
   addTouristAttractionToWishlist(userId: number, attractionId: number): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + "/addTouristAttraction/" + userId + "/" + attractionId, {});
   }
+
+  getWishlistTouristAttractionsByUserId(userId: number): Observable<Wishlist> {
+    return this.httpClient.get<Wishlist>(this.baseURL + "/getWishlistAndAttraction/" + userId);
+  }
+
+  deleteTouristAttractionFromWishlist(userId: number, attractionId: number):Observable<any> {
+    return this.httpClient.delete<any>(this.baseURL + "/removeTouristAttraction/" + userId + "/" + attractionId);
+  }
 }
