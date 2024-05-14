@@ -30,8 +30,6 @@ export class AuthService {
   }
 
   resetPassword(resetPasswordDemand: ResetPasswordDemand) {
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-    return this.httpClient.post<string>(this.baseURL + "/resetPassword", resetPasswordDemand, {headers});
+    return this.httpClient.post<string>(this.baseURL + "/resetPassword", resetPasswordDemand);
   }
 }
