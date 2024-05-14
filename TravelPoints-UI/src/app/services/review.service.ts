@@ -3,6 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {NewReview} from "../models/NewReview";
 import {CreatedReview} from "../models/CreatedReview";
+import {HourStatistic} from "../models/HourStatistic";
+import {MonthStatistic} from "../models/MonthStatistic";
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +21,13 @@ export class ReviewService {
 
   getAllReviewsById(id: number): Observable<CreatedReview[]> {
     return this.httpClient.get<CreatedReview[]>(this.baseURL + "/getAllByAttractionId/" + id);
+  }
+
+  getDayStatistic(attractionId: number, day: string): Observable<HourStatistic[]>  {
+    return this.httpClient.get<HourStatistic[]>(this.baseURL + "/getDayStatistic/" + attractionId + "/" + day);
+  }
+
+  getMonthStatistic(attractionId: number, year: number): Observable<MonthStatistic[]>  {
+    return this.httpClient.get<MonthStatistic[]>(this.baseURL + "/getYearStatistic/" + attractionId + "/" + year);
   }
 }
