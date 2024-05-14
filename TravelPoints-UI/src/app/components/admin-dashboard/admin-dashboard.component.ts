@@ -15,6 +15,7 @@ import {TouristAttraction} from "../../models/TouristAttraction";
 import {ReviewService} from "../../services/review.service";
 import {HourStatistic} from "../../models/HourStatistic";
 import {MonthStatistic} from "../../models/MonthStatistic";
+import {TouristAttractionVisits} from "../../models/TouristAttractionVisits";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -51,8 +52,11 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   hourStatistics: number[] = []
   monthStatistics: number[] = []
   statisticType: string = "";
+  touristAttractionVisits: number[] = []
+  touristAttractionNames: string[] = []
 
   @ViewChild(AreaChartComponent) areaChartComponent!: AreaChartComponent;
+  @ViewChild(OptionsLineChartComponent) optionsChartComponent!: OptionsLineChartComponent;
   constructor(private touristAttractionService: TouristAttractionService, private fb: FormBuilder, private reviewService: ReviewService) {
   }
 
@@ -68,6 +72,19 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
     }
     this.touristAttractionService.getAllTouristAttractions().subscribe((touristAttractions: TouristAttraction[]) => {
       this.touristAttractions = touristAttractions
+    })
+    this.reviewService.getNumberOfVisitsPerAttraction().subscribe((touristAttractionVisits: TouristAttractionVisits[])=> {
+      let i = 0
+      this.touristAttractionVisits = []
+      this.touristAttractionNames = []
+      for(let touristAttractionVisit of touristAttractionVisits) {
+        this.touristAttractionVisits[i] = touristAttractionVisit.noOfVisits!
+        this.touristAttractionNames[i] = touristAttractionVisit.name!
+        i++
+      }
+      this.optionsChartComponent.chartOptions.labels = this.touristAttractionNames
+      this.optionsChartComponent.chartOptions.series = this.touristAttractionVisits
+
     })
   }
   ngAfterViewInit(): void {
