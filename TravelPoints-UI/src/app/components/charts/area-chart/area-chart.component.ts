@@ -17,27 +17,19 @@ export class AreaChartComponent implements OnInit{
   this.chartOptions = {
     chart: {
       height: 328,
-      type: 'area',
+      type: 'bar',
       stacked: false,
     },
     stroke: {
       curve: 'straight'
     },
     series: [{
-      name: "TouristAttraction 1",
-      data: [11, 15, 26, 20, 33, 27]
-    },
-      {
-        name: "TouristAttraction 2",
-        data: [32, 33, 21, 42, 19, 32]
-      },
-      {
-        name: "TouristAttraction 3",
-        data: [20, 39, 52, 11, 29, 43]
-      }
+      name: "TouristAttraction",
+      data: []
+    }
     ],
     xaxis: {
-      categories: ['2019', '2020', '2021', '2022', '2023', '2024'],
+      categories: [],
     },
     tooltip: {
       followCursor: true
@@ -50,6 +42,30 @@ export class AreaChartComponent implements OnInit{
 
 
   ngOnInit(): void {
+    this.chartOptions = {
+      chart: {
+        height: 328,
+        type: 'bar',
+        stacked: false,
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      series: [{
+        name: "TouristAttraction",
+        data: []
+      }
+      ],
+      xaxis: {
+        categories: [],
+      },
+      tooltip: {
+        followCursor: true
+      },
+      fill: {
+        opacity: 1,
+      },
+    };
   }
 
 }

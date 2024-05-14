@@ -32,6 +32,26 @@
           <div class="row mt-4 d-flex justify-content-center">
             <div class="col-md-6">
               <div class="box shadow mt-4">
+                <div class="form-group">
+                <div class="select-container">
+                  <select name="statisticType" id="statisticType" class="form-control" [(ngModel)]="statisticType" (change)="selectionChange()">
+                    <option value="" disabled>Select a statistic type</option>
+                    <option *ngFor="let statisticType of ['days', 'months']" [ngValue]="statisticType" >{{ statisticType }}</option>
+                  </select>
+                  <select name="selectedTouristAttraction" id="selectedTouristAttraction" class="form-control" [(ngModel)]="selectedTouristAttraction" (change)="selectionChange()">
+                    <option [ngValue]="undefined" disabled>Select a tourist attraction</option>
+                    <option *ngFor="let touristAttraction of touristAttractions" [ngValue]="touristAttraction" >{{ touristAttraction.name }}</option>
+                  </select>
+                  <select *ngIf="statisticType == 'days' " name="selectedDay" id="selectedDay" class="form-control"  [(ngModel)]="selectedDay" (change)="selectionChange()">
+                    <option value="" [disabled]="true">Select a day</option>
+                    <option *ngFor="let day of days" [value]="day">{{ day }}</option>
+                  </select>
+                  <select *ngIf="statisticType == 'months' " name="selectedYear" id="selectedYear" class="form-control"  [(ngModel)]="selectedYear" (change)="selectionChange()">
+                    <option [ngValue]="undefined" [disabled]="true">Select a year</option>
+                    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                  </select>
+                </div>
+                </div>
                 <app-area-chart></app-area-chart>
               </div>
             </div>
