@@ -82,3 +82,12 @@
 .col .mx-4 {
   margin-top: 40px;
 }
+
+.select-container {
+  display: flex;
+  gap: 10px;
+}
+
+.select-container .form-control {
+  flex: 1;
+}
