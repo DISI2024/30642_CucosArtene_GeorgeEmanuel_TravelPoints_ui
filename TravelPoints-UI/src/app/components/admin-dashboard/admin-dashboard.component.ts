@@ -15,6 +15,7 @@ import {TouristAttraction} from "../../models/TouristAttraction";
 import {ReviewService} from "../../services/review.service";
 import {HourStatistic} from "../../models/HourStatistic";
 import {MonthStatistic} from "../../models/MonthStatistic";
+import {TouristAttractionVisits} from "../../models/TouristAttractionVisits";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -41,19 +42,27 @@ import {MonthStatistic} from "../../models/MonthStatistic";
 export class AdminDashboardComponent implements OnInit, AfterViewInit {
   touristAttractions: TouristAttraction[] = []
   days: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
-  months: string[] = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-  years: number[] = [2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014];
+  months: string[] = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+  years: number[] = [2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014]
   username: string = ""
   selectedTouristAttraction: TouristAttraction | undefined
   selectedDay: string = ""
   selectedYear: number | undefined
   myForm: any
-  hourStatistics: number[] = []
-  monthStatistics: number[] = []
-  statisticType: string = "";
+  hourStatistics: Array<number> = []
+  monthStatistics: Array<number> = []
+  statisticType: string = ""
+  touristAttractionVisits: Array<number> = []
+  touristAttractionNames: Array<string> = []
 
   @ViewChild(AreaChartComponent) areaChartComponent!: AreaChartComponent;
-  constructor(private touristAttractionService: TouristAttractionService, private fb: FormBuilder, private reviewService: ReviewService) {
+  @ViewChild(OptionsLineChartComponent) optionsChartComponent!: OptionsLineChartComponent;
+
+  constructor(
+    private touristAttractionService: TouristAttractionService,
+    private fb: FormBuilder,
+    private reviewService: ReviewService
+  ) {
   }
 
   ngOnInit(): void {
@@ -61,35 +70,47 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
       selectedTouristAttraction: [''],
       selectedDay: ['']
     })
+
     let token = localStorage.getItem('token')
-    if(token) {
-      const tokenPayload: any = jwtDecode(token);
+    if (token) {
+      const tokenPayload: any = jwtDecode(token)
       this.username = tokenPayload.userType
     }
+
     this.touristAttractionService.getAllTouristAttractions().subscribe((touristAttractions: TouristAttraction[]) => {
       this.touristAttractions = touristAttractions
     })
+
+    this.reviewService.getNumberOfVisitsPerAttraction().subscribe((touristAttractionVisits: TouristAttractionVisits[]) => {
+      this.touristAttractionVisits = []
+      this.touristAttractionNames = []
+      touristAttractionVisits.forEach(touristAttractionVisit => {
+        this.touristAttractionVisits.push(touristAttractionVisit.noOfVisits!)
+        this.touristAttractionNames.push(touristAttractionVisit.name!)
+      })
+      this.optionsChartComponent.chartOptions.labels = this.touristAttractionNames
+      this.optionsChartComponent.chartOptions.series = this.touristAttractionVisits
+    })
   }
+
   ngAfterViewInit(): void {
   }
 
   selectionChange() {
     if (this.statisticType!) {
-      if (this.statisticType == 'days') {
+      if (this.statisticType === 'days') {
         if (this.selectedDay! && this.selectedTouristAttraction!) {
           this.reviewService.getDayStatistic(this.selectedTouristAttraction.attractionId!, this.selectedDay).subscribe((hourStatistics: HourStatistic[]) => {
             this.hourStatistics = []
-            let i = 0
-            for (let hourStatistic of hourStatistics) {
-              this.hourStatistics[i++] = hourStatistic.numberOfVisits!
-            }
+            hourStatistics.forEach(hourStatistic => {
+              this.hourStatistics.push(hourStatistic.numberOfVisits!)
+            })
             this.areaChartComponent.chartOptions.series = [{
               name: this.selectedTouristAttraction?.name + "",
               data: this.hourStatistics
-            }
-            ]
+            }]
             this.areaChartComponent.chartOptions.xaxis = {
-              categories: this.generateHoursArray(this.selectedTouristAttraction?.openingTime!, this.selectedTouristAttraction?.closingTime!),
+              categories: this.generateHoursArray(this.selectedTouristAttraction?.openingTime!, this.selectedTouristAttraction?.closingTime!)
             }
           })
         }
@@ -97,15 +118,13 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
         if (this.selectedYear! && this.selectedTouristAttraction!) {
           this.reviewService.getMonthStatistic(this.selectedTouristAttraction.attractionId!, this.selectedYear).subscribe((monthStatistics: MonthStatistic[]) => {
             this.monthStatistics = []
-            let i = 0
-            for (let monthStatistic of monthStatistics) {
-              this.monthStatistics[i++] = monthStatistic.numberOfVisits!
-            }
+            monthStatistics.forEach(monthStatistic => {
+              this.monthStatistics.push(monthStatistic.numberOfVisits!)
+            })
             this.areaChartComponent.chartOptions.series = [{
               name: this.selectedTouristAttraction?.name + "",
               data: this.monthStatistics
-            }
-            ]
+            }]
             this.areaChartComponent.chartOptions.xaxis = {
               categories: this.months
             }
@@ -114,13 +133,14 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
       }
     }
   }
+
   generateHoursArray(openingTime: string, closingTime: string): string[] {
-    const hoursArray: string[] = [];
-    const [openingHour, openingMinute] = openingTime.split(':').map(Number);
-    const [closingHour, closingMinute] = closingTime.split(':').map(Number);
+    const hoursArray: string[] = []
+    const [openingHour, openingMinute] = openingTime.split(':').map(Number)
+    const [closingHour, closingMinute] = closingTime.split(':').map(Number)
     for (let hour = openingHour; hour <= closingHour; hour++) {
-        hoursArray.push(`${hour}:00`);
+      hoursArray.push(`${hour}:00`)
     }
-    return hoursArray;
+    return hoursArray
   }
 }

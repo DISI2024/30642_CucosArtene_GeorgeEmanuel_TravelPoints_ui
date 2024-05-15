@@ -5,6 +5,7 @@ import {NewReview} from "../models/NewReview";
 import {CreatedReview} from "../models/CreatedReview";
 import {HourStatistic} from "../models/HourStatistic";
 import {MonthStatistic} from "../models/MonthStatistic";
+import {TouristAttractionVisits} from "../models/TouristAttractionVisits";
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,9 @@ export class ReviewService {
 
   getMonthStatistic(attractionId: number, year: number): Observable<MonthStatistic[]>  {
     return this.httpClient.get<MonthStatistic[]>(this.baseURL + "/getYearStatistic/" + attractionId + "/" + year);
+  }
+
+  getNumberOfVisitsPerAttraction() {
+    return this.httpClient.get<TouristAttractionVisits[]>(this.baseURL + "/getNumberOfVisitsPerAttraction");
   }
 }
