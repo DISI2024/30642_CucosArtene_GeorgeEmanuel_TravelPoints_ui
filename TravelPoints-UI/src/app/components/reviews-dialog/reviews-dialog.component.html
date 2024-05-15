@@ -2,8 +2,8 @@
   Reviews
 </h1>
 <mat-dialog-content class="dialog-content">
-  <app-rating (ratingChange)="handleRateChange($event)"></app-rating>
-  <div class="form-group">
+  <app-rating *ngIf="checkHourIntervalForReview()" (ratingChange)="handleRateChange($event)"></app-rating>
+  <div *ngIf="checkHourIntervalForReview()" class="form-group">
     <textarea [(ngModel)]="reviewText" class="form-control" placeholder="Enter review" rows="1"></textarea>
   </div>
   <hr style="border-style: dotted;">

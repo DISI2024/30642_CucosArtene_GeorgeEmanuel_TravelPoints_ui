@@ -44,8 +44,8 @@
       <p>Contact information: {{attraction.contactInfo}}</p>
       <p>Address: {{attraction.address}}</p>
     </div>
-    <button *ngIf="checkTouristRole() && checkHourIntervalForReview(attraction)" mat-button color="warn"
-            (click)="openReviewsDialog(attraction.attractionId!)">Reviews
+    <button *ngIf="checkTouristRole()" mat-button color="warn"
+            (click)="openReviewsDialog(attraction)">Reviews
     </button>
   </div>
 </section>

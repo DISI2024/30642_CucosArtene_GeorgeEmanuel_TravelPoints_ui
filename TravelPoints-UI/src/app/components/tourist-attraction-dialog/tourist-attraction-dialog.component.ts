@@ -112,10 +112,12 @@ export class TouristAttractionDialogComponent implements OnInit {
     const startTime = 8;
     const endTime = 24;
 
-    for (let hour = startTime; hour < endTime; hour++) {
+    for (let hour = startTime; hour <= endTime; hour++) {
       this.timeSlots.push(`${hour.toString().padStart(2, '0')}:00`);
-      this.timeSlots.push(`${hour.toString().padStart(2, '0')}:30`);
+      if (hour !== 24) {
+        this.timeSlots.push(`${hour.toString().padStart(2, '0')}:30`);
+      }
     }
-    this.timeSlots.push("00:00");
+
   }
 }

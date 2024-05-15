@@ -23,7 +23,8 @@ import {NewReview} from "../../models/NewReview";
 import {ReviewService} from "../../services/review.service";
 import {CreatedReview} from "../../models/CreatedReview";
 import {HttpClientModule} from "@angular/common/http";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
+import {TouristAttraction} from "../../models/TouristAttraction";
 
 @Component({
   selector: 'app-reviews-dialog',
@@ -45,7 +46,8 @@ import {NgForOf} from "@angular/common";
     MatCardModule,
     MatIcon,
     HttpClientModule,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   providers: [ReviewService],
   templateUrl: './reviews-dialog.component.html',
@@ -62,7 +64,7 @@ export class ReviewsDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.reviewService.getAllReviewsById(this.data.attractionId).subscribe(reviews => {
+    this.reviewService.getAllReviewsById(this.data.attraction.attractionId).subscribe(reviews => {
       this.reviews = reviews
     })
   }
@@ -76,18 +78,27 @@ export class ReviewsDialogComponent implements OnInit {
     if (this.valid) {
       let review: NewReview = new NewReview();
       review.userId = this.data.userId
-      review.attractionId = this.data.attractionId
+      review.attractionId = this.data.attraction.attractionId
       review.rating = this.rating
       review.reviewText = this.reviewText
       this.reviewService.addReview(review).subscribe(() => {
         alert("Review added successfully!")
         this.reviewText = undefined
-        this.reviewService.getAllReviewsById(this.data.attractionId).subscribe(reviews => {
+        this.reviewService.getAllReviewsById(this.data.attraction.attractionId).subscribe(reviews => {
           this.reviews = reviews
         })
       })
     } else {
       alert("Please provide rating and a review!")
     }
+  }
+
+  checkHourIntervalForReview(): boolean {
+    const now = new Date();
+    let hour = ("0" + now.getHours()).slice(-2);
+    if (this.data.attraction.closingTime!.substring(0, 2) === '00') {
+      return hour >= this.data.attraction.openingTime!.substring(0, 2) && hour <= '24'
+    }
+    return hour >= this.data.attraction.openingTime!.substring(0, 2) && hour <= this.data.attraction.closingTime!.substring(0, 2)
   }
 }
