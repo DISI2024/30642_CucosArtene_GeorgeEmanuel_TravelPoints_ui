@@ -6,8 +6,8 @@ import {AuthService} from "../../services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {jwtDecode} from "jwt-decode";
-import {ResetPasswordDialogComponent} from "../reset-password-dialog/reset-password-dialog.component";
 import {WebsocketService} from "../../services/websocket.service";
+import {ResetPasswordDialogComponent} from "../reset-password-dialog/reset-password-dialog.component";
 
 @Component({
   selector: 'app-navigation-bar',
@@ -21,7 +21,6 @@ import {WebsocketService} from "../../services/websocket.service";
   styleUrl: './navigation-bar.component.css'
 })
 export class NavigationBarComponent implements OnInit {
-
   token: string | undefined
 
   constructor(
@@ -65,6 +64,12 @@ export class NavigationBarComponent implements OnInit {
     })
   }
 
+  openResetPasswordDialog() {
+    this.dialog.open(ResetPasswordDialogComponent, {
+      width: '100vh'
+    });
+  }
+
   checkTouristRole() {
     if (this.token) {
       let tokenPayload: any = jwtDecode(this.token)
@@ -72,11 +77,5 @@ export class NavigationBarComponent implements OnInit {
       return userType === 'TOURIST'
     }
     return false
-  }
-
-  openResetPasswordDialog() {
-    this.dialog.open(ResetPasswordDialogComponent, {
-      width: '100vh'
-    });
   }
 }
