@@ -6,6 +6,7 @@ import {AuthService} from "../../services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {jwtDecode} from "jwt-decode";
+import {ResetPasswordDialogComponent} from "../reset-password-dialog/reset-password-dialog.component";
 import {WebsocketService} from "../../services/websocket.service";
 import {ResetPasswordDialogComponent} from "../reset-password-dialog/reset-password-dialog.component";
 
@@ -77,5 +78,11 @@ export class NavigationBarComponent implements OnInit {
       return userType === 'TOURIST'
     }
     return false
+  }
+
+  openResetPasswordDialog() {
+    this.dialog.open(ResetPasswordDialogComponent, {
+      width: '100vh'
+    });
   }
 }
